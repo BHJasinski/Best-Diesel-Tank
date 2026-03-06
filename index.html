@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JFC - Twoja Baza Paliwowa | Professional Equipment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fs-green: #4dbb3c;
+            --fs-orange: #ff8c00;
+            --fs-dark: #1a1c1e;
+            --fs-panel: #2a2d31;
+        }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--fs-dark);
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+        .fs-border {
+            border: 2px solid #3d4147;
+            transition: all 0.3s ease;
+        }
+        .fs-border:hover {
+            border-color: var(--fs-green);
+            box-shadow: 0 0 15px rgba(77, 187, 60, 0.3);
+        }
+        .fs-gradient {
+            background: linear-gradient(135deg, #2a2d31 0%, #1a1c1e 100%);
+        }
+        .stat-bar {
+            height: 8px;
+            background: #3d4147;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .stat-fill {
+            height: 100%;
+            background: var(--fs-green);
+        }
+        .btn-action {
+            background-color: var(--fs-orange);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: transform 0.2s;
+        }
+        .btn-action:hover {
+            transform: scale(1.05);
+            background-color: #e67e00;
+        }
+        .category-card {
+            cursor: pointer;
+            filter: grayscale(40%);
+        }
+        .category-card:hover {
+            filter: grayscale(0%);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <nav class="sticky top-0 z-50 bg-[#1a1c1e] border-b-2 border-[#4dbb3c] px-6 py-4 flex justify-between items-center">
+        <div class="text-3xl font-bold tracking-tighter text-white">
+            <span class="text-[#4dbb3c]">JFC</span> SHOP <span class="text-sm font-light text-gray-400">v24.1</span>
+        </div>
+        <div class="hidden md:flex space-x-8 font-semibold uppercase tracking-widest">
+            <a href="#katalog" class="hover:text-[#4dbb3c]">Katalog</a>
+            <a href="#trucktank" class="hover:text-[#4dbb3c]">Mobilne</a>
+            <a href="#kontakt" class="hover:text-[#4dbb3c]">Kontakt</a>
+        </div>
+        <div class="text-[#ff8c00] font-bold">LIVE DEALER: ONLINE</div>
+    </nav>
+
+    <header class="relative h-[70vh] flex items-center justify-center overflow-hidden bg-black">
+        <div class="absolute inset-0 opacity-40">
+            <img src="https://images.unsplash.com/photo-1590486803833-ffc475d491bc?auto=format&fit=crop&q=80" alt="Farm Background" class="w-full h-full object-cover">
+        </div>
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-6xl md:text-8xl font-bold uppercase italic tracking-tighter mb-4">
+                Twoja Baza <span class="text-[#4dbb3c]">Paliwowa</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8 font-light italic">
+                Najnowocześniejsze systemy magazynowania od JFC Polska. Wybierz swój model i skonfiguruj wyposażenie.
+            </p>
+            <a href="#katalog" class="btn-action inline-block px-12 py-4 text-2xl font-bold text-black uppercase">
+                Otwórz Katalog
+            </a>
+        </div>
+    </header>
+
+    <section id="katalog" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="flex items-center mb-12 space-x-4">
+            <div class="h-10 w-2 bg-[#4dbb3c]"></div>
+            <h2 class="text-4xl font-bold uppercase italic">Zbiorniki Dwupłaszczowe (Diesel)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="fs-panel fs-border p-6 rounded-sm relative group">
+                <div class="absolute top-4 right-4 bg-black/50 px-2 py-1 text-xs border border-gray-600">ID: JFC-2500</div>
+                <img src="https://via.placeholder.com/400x300/2a2d31/ffffff?text=JFC+2500+DIESEL" alt="JFC 2500" class="w-full mb-6">
+                <h3 class="text-2xl font-bold mb-2 uppercase">JFC 2500 S-Line</h3>
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1 uppercase text-gray-400"><span>Pojemność</span><span>2500 L</span></div>
+                        <div class="stat-bar"><div class="stat-fill w-[65%]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1 uppercase text-gray-400"><span>Wydajność Pompy</span><span>72 l/min</span></div>
+                        <div class="stat-bar"><div class="stat-fill w-[85%]"></div></div>
+                    </div>
+                </div>
+                <ul class="text-sm text-gray-400 mb-6 space-y-1 italic">
+                    <li>+ Licznik cyfrowy K24</li>
+                    <li>+ Wąż 6m / Pistolet automatyczny</li>
+                    <li>+ Czujnik przecieku i przepełnienia</li>
+                </ul>
+                <button onclick="orderProduct('JFC 2500')" class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] py-3 font-bold uppercase transition-colors">Wyślij zapytanie</button>
+            </div>
+
+            <div class="fs-panel fs-border p-6 rounded-sm relative group border-l-4 border-l-[#4dbb3c]">
+                <div class="absolute top-4 right-4 bg-black/50 px-2 py-1 text-xs border border-gray-600">ID: JFC-5000</div>
+                <img src="https://via.placeholder.com/400x300/2a2d31/ffffff?text=JFC+5000+DIESEL" alt="JFC 5000" class="w-full mb-6">
+                <h3 class="text-2xl font-bold mb-2 uppercase">JFC 5000 PRO</h3>
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1 uppercase text-gray-400"><span>Pojemność</span><span>5000 L</span></div>
+                        <div class="stat-bar"><div class="stat-fill w-[90%]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1 uppercase text-gray-400"><span>Wydajność Pompy</span><span>79 l/min</span></div>
+                        <div class="stat-bar"><div class="stat-fill w-[95%]"></div></div>
+                    </div>
+                </div>
+                <ul class="text-sm text-gray-400 mb-6 space-y-1 italic">
+                    <li>+ Szklany filtr paliwa z separatorem</li>
+                    <li>+ System monitoringu SMDP (Opcja)</li>
+                    <li>+ 10 Lat gwarancji na szczelność</li>
+                </ul>
+                <button onclick="orderProduct('JFC 5000')" class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] py-3 font-bold uppercase transition-colors">Wyślij zapytanie</button>
+            </div>
+
+            <div id="trucktank" class="fs-panel fs-border p-6 rounded-sm relative group">
+                <div class="absolute top-4 right-4 bg-[#ff8c00] text-black px-2 py-1 text-xs font-bold uppercase">Mobilny</div>
+                <img src="https://via.placeholder.com/400x300/2a2d31/ffffff?text=TruckTank+950" alt="TruckTank 950" class="w-full mb-6">
+                <h3 class="text-2xl font-bold mb-2 uppercase">TruckTank 950</h3>
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1 uppercase text-gray-400"><span>Mobilność</span><span>MAX</span></div>
+                        <div class="stat-bar"><div class="stat-fill w-[100%]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1 uppercase text-gray-400"><span>Zasilanie</span><span>12V / 24V</span></div>
+                        <div class="stat-bar"><div class="stat-fill w-[70%]"></div></div>
+                    </div>
+                </div>
+                <ul class="text-sm text-gray-400 mb-6 space-y-1 italic">
+                    <li>+ Pasuje na pakę pick-upa</li>
+                    <li>+ Siłowniki pneumatyczne klapy</li>
+                    <li>+ Konstrukcja zapobiegająca falowaniu</li>
+                </ul>
+                <button onclick="orderProduct('TruckTank 950')" class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] py-3 font-bold uppercase transition-colors">Wyślij zapytanie</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="py-20 bg-[#141517] border-t-2 border-gray-800">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold uppercase mb-4 italic text-[#ff8c00]">Wyślij zapytanie do dealera</h2>
+            <p class="text-gray-400 mb-12 italic text-lg">Wypełnij dane, a przygotujemy dla Ciebie ofertę w stylu JFC.</p>
+            
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div>
+                    <label class="block uppercase text-sm font-bold mb-2 text-gray-500">Twoje Imię / Firma</label>
+                    <input type="text" id="user_name" class="w-full bg-[#2a2d31] border-2 border-gray-700 p-4 focus:border-[#4dbb3c] outline-none">
+                </div>
+                <div>
+                    <label class="block uppercase text-sm font-bold mb-2 text-gray-500">Numer Telefonu</label>
+                    <input type="tel" id="user_phone" class="w-full bg-[#2a2d31] border-2 border-gray-700 p-4 focus:border-[#4dbb3c] outline-none">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block uppercase text-sm font-bold mb-2 text-gray-500">Wybierz Model lub Zadaj Pytanie</label>
+                    <textarea id="message" rows="4" class="w-full bg-[#2a2d31] border-2 border-gray-700 p-4 focus:border-[#4dbb3c] outline-none" placeholder="Interesuje mnie model..."></textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <button type="button" onclick="sendMessage()" class="btn-action w-full py-5 text-2xl font-bold text-black uppercase">Wyślij wiadomość [ENTER]</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-600 text-sm uppercase tracking-widest border-t border-gray-900">
+        &copy; 2024 JFC Dealer Portal. All Equipment belongs to JFC Polska. <br>
+        <span class="text-[#4dbb3c]">Powered by Farming Experience Web Design</span>
+    </footer>
+
+    <script>
+        function orderProduct(model) {
+            document.getElementById('message').value = "Dzień dobry, proszę o wycenę zbiornika: " + model + ". Proszę o kontakt telefoniczny.";
+            document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+            
+            // Efekt podświetlenia pola
+            setTimeout(() => {
+                document.getElementById('message').focus();
+            }, 800);
+        }
+
+        function sendMessage() {
+            const name = document.getElementById('user_name').value;
+            if(name) {
+                alert("Dziękujemy, " + name + "! Zapytanie zostało wysłane do systemu JFC. Skontaktujemy się niezwłocznie.");
+            } else {
+                alert("Wypełnij przynajmniej swoje imię, abyśmy mogli się skontaktować.");
+            }
+        }
+    </script>
+</body>
+</html>
