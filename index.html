@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best Diesel Tank | JFC Professional Equipment</title>
+    <title>Best Diesel Tank | Certyfikowany Dealer JFC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,39 +20,43 @@
             scroll-behavior: smooth;
         }
 
-        /* --- MECHANIKA LOGO --- */
-        .logo-container {
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        /* --- NOWA MECHANIKA LOGO BDT --- */
+        .logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .logo-container:hover {
-            transform: scale(1.05);
+        
+        .logo-bdt {
+            height: 60px; /* Możesz dostosować wysokość */
+            width: auto;
+            filter: drop-shadow(0 0 0px rgba(77, 187, 60, 0));
+            transition: all 0.4s ease;
+            animation: logo-glow 3s infinite alternate;
         }
-        .logo-text {
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(90deg, #fff, #888, #fff);
-            background-repeat: no-repeat;
-            background-size: 80%;
-            animation: shine 5s linear infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
+
+        .logo-wrapper:hover {
+            transform: scale(1.08);
         }
-        @keyframes shine {
-            0% { background-position: -500%; }
-            100% { background-position: 500%; }
+
+        .logo-wrapper:hover .logo-bdt {
+            filter: drop-shadow(0 0 15px rgba(77, 187, 60, 0.6));
         }
+
+        @keyframes logo-glow {
+            from { filter: drop-shadow(0 0 2px rgba(77, 187, 60, 0.2)); }
+            to { filter: drop-shadow(0 0 8px rgba(77, 187, 60, 0.5)); }
+        }
+
         .logo-sub {
-            font-size: 0.6rem;
-            letter-spacing: 4px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
             color: var(--fs-green);
-            display: block;
-            text-align: center;
-            margin-top: -5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 4px;
+            opacity: 0.9;
         }
 
         /* --- RESZTA STYLÓW --- */
@@ -70,41 +74,38 @@
 </head>
 <body class="overflow-x-hidden">
 
-    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-6 py-3">
+    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-6 py-2">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             
-            <div class="hidden md:flex space-x-6 font-semibold uppercase tracking-widest text-xs">
-                <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Katalog</a>
-                <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Wyślij zapytanie</a>
+            <div class="hidden md:flex space-x-8 font-semibold uppercase tracking-widest text-xs">
+                <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Maszyny</a>
+                <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Kontakt</a>
             </div>
 
-            <div class="logo-container text-center" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <div class="logo-text text-2xl md:text-4xl">
-                    Best <span class="text-[#4dbb3c]">Diesel</span> Tank
-                </div>
-                <span class="logo-sub font-bold italic">Authorized JFC Dealer</span>
+            <div class="logo-wrapper cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <img src="logo%20BDT.png" alt="Best Diesel Tank Logo" class="logo-bdt">
+                <span class="logo-sub">Certyfikowany Dealer JFC</span>
             </div>
 
             <div class="flex items-center space-x-4">
                 <div class="hidden sm:block text-right">
-                    <div class="text-[#ff8c00] font-bold text-xs animate-pulse leading-none">STATUS: ONLINE</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-tighter">Support 24/7</div>
+                    <div class="text-[#ff8c00] font-bold text-xs animate-pulse leading-none">EKSPERT DOSTĘPNY</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-tighter">Doradztwo techniczne</div>
                 </div>
-                <div class="w-8 h-8 bg-[#4dbb3c] rounded-full flex items-center justify-center text-black font-bold">!</div>
             </div>
         </div>
     </nav>
 
-    <header class="relative h-[50vh] flex items-center justify-center overflow-hidden bg-black">
-        <div class="absolute inset-0 opacity-40">
+    <header class="relative h-[40vh] flex items-center justify-center overflow-hidden bg-black border-b border-gray-800">
+        <div class="absolute inset-0 opacity-30">
             <img src="https://images.unsplash.com/photo-1590486803833-ffc475d491bc?auto=format&fit=crop&q=80" alt="Farm" class="w-full h-full object-cover">
         </div>
         <div class="relative z-10 text-center px-4">
-            <h1 class="text-4xl md:text-7xl font-black uppercase italic tracking-tighter mb-2">
-                ZBIORNIKI <span class="text-[#4dbb3c]">KLASY PREMIUM</span>
+            <h1 class="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-2">
+                Profesjonalne <span class="text-[#4dbb3c]">Zbiorniki</span>
             </h1>
-            <p class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 font-light uppercase tracking-widest">
-                Dostarczamy paliwo tam, gdzie pracują najlepsi.
+            <p class="text-xs md:text-lg text-gray-300 max-w-3xl mx-auto font-light uppercase tracking-[0.3em]">
+                Best Diesel Tank – Niezależna Jakość
             </p>
         </div>
     </header>
@@ -119,22 +120,21 @@
             </div>
         </div>
 
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            </div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </section>
 
     <section id="kontakt" class="py-16 bg-[#141517] border-y-2 border-gray-800">
         <div class="max-w-4xl mx-auto px-6">
             <div class="bg-[#2a2d31] p-6 fs-border">
-                <h2 class="text-3xl font-bold uppercase mb-6 italic text-[#ff8c00]">Szybka wycena - Best Diesel Tank</h2>
+                <h2 class="text-3xl font-bold uppercase mb-6 italic text-[#ff8c00]">Zapytaj o Best Diesel Tank</h2>
                 <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="md:col-span-2">
-                        <input type="text" id="selected_model" placeholder="Model" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 text-[#4dbb3c] font-bold outline-none" readonly>
+                        <input type="text" id="selected_model" placeholder="Wybierz model z katalogu" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 text-[#4dbb3c] font-bold outline-none" readonly>
                     </div>
-                    <input type="text" id="name" placeholder="Imię / Nazwa firmy" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
-                    <input type="tel" id="phone" placeholder="Telefon" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
+                    <input type="text" id="name" placeholder="Imię / Firma" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
+                    <input type="tel" id="phone" placeholder="Numer telefonu" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
                     <div class="md:col-span-2">
-                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-4 text-xl font-bold text-black uppercase">Wyślij do doradcy</button>
+                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-4 text-xl font-bold text-black uppercase">Wyślij prośbę o kontakt</button>
                     </div>
                 </form>
             </div>
@@ -142,10 +142,11 @@
     </section>
 
     <footer class="py-10 text-center text-gray-700 text-[10px] uppercase tracking-[0.5em]">
-        Best Diesel Tank &copy; 2026 | Dealer Premium JFC Polska
+        Best Diesel Tank &copy; 2026 | Niezależny Dystrybutor Certyfikowany JFC
     </footer>
 
     <script>
+        // Przykład bazy z Twoimi nazwami pól
         const db = [
             {
                 id: "JFC-2500-DUO",
@@ -153,17 +154,8 @@
                 name: "JFC 2500 Diesel Duo",
                 vol: "2500 L",
                 stats: { capacity: 45, durability: 98 },
-                features: ["Pompa 72 l/min", "Atest UDT", "System DuoSeal"],
-                img: "https://via.placeholder.com/400x300/2a2d31/4dbb3c?text=JFC+2500+DUO"
-            },
-            {
-                id: "JFC-5000-PRO",
-                cat: "diesel",
-                name: "JFC 5000 Professional",
-                vol: "5000 L",
-                stats: { capacity: 85, durability: 95 },
-                features: ["Zwijadło 8-12m", "Filtr Szklany", "Wysoka Wydajność"],
-                img: "https://via.placeholder.com/400x300/2a2d31/4dbb3c?text=JFC+5000+PRO"
+                features: ["Pompa 72 l/min", "Atest UDT", "Dwupłaszczowy"],
+                img: "https://via.placeholder.com/400x300/2a2d31/4dbb3c?text=2500+DUO"
             }
         ];
 
@@ -205,7 +197,7 @@
 
         function confirmOrder() {
             const name = document.getElementById('name').value;
-            if(name) alert("Wiadomość wysłana! Doradca Best Diesel Tank oddzwoni do Państwa.");
+            if(name) alert("Dziękujemy! Doradca Best Diesel Tank skontaktuje się z Tobą wkrótce.");
             else alert("Proszę podać dane kontaktowe.");
         }
 
