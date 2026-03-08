@@ -103,7 +103,7 @@
     <section id="katalog" class="py-10 px-4 max-w-7xl mx-auto">
         <div class="text-center mb-8">
             <div class="flex flex-wrap justify-center gap-2">
-                <button onclick="changeCategory('diesel', this)" class="category-btn active px-4 py-2 uppercase text-[10px]">Olej Napędowy</button>
+                <button onclick="changeCategory('diesel', this)" class="category-btn active px-4 py-2 uppercase text-[10px]">Diesel</button>
                 <button onclick="changeCategory('adblue', this)" class="category-btn px-4 py-2 uppercase text-[10px]">AdBlue</button>
                 <button onclick="changeCategory('woda', this)" class="category-btn px-4 py-2 uppercase text-[10px]">Woda</button>
             </div>
@@ -141,7 +141,7 @@
                 cat: "diesel",
                 name: "JFC 2500 Diesel Duo",
                 vol: "2500 L",
-                stats: { capacity: 45, durability: 98 },
+                stats: { capacity: 45, durability: 100 },
                 // TWOJE ZDJĘCIA AVIF
                 images: [
                     "img/JFC2500-DUO-1.avif", "img/JFC2500-DUO-2.avif", "img/JFC2500-DUO-3.avif", 
@@ -193,20 +193,20 @@
                         <h3 class="text-xl font-bold uppercase italic mb-2 border-l-4 border-[#4dbb3c] pl-3 leading-tight">${p.name}</h3>
                         
                         <div class="mb-4">
-                            <div class="text-[9px] uppercase text-gray-500 flex justify-between"><span>Pojemność magazynowa</span><span>${p.vol}</span></div>
+                            <div class="text-[11px] uppercase text-gray-500 flex justify-between"><span>Pojemność magazynowa</span><span>${p.vol}</span></div>
                             <div class="stat-bar"><div class="stat-fill" style="width: ${p.stats.capacity}%"></div></div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4 flex-grow">
                             <div>
-                                <span class="text-[8px] text-[#4dbb3c] font-bold uppercase tracking-widest">Podstawowe</span>
-                                <ul class="text-[9px] text-gray-400 mt-1 uppercase leading-tight">
+                                <span class="text-[9px] text-[#4dbb3c] font-bold uppercase tracking-widest">Podstawowe</span>
+                                <ul class="text-[10px] text-gray-400 mt-1 uppercase leading-tight">
                                     ${p.base_features.map(f => `<li class="mb-1">• ${f}</li>`).join('')}
                                 </ul>
                             </div>
                             <div>
-                                <span class="text-[8px] text-[#ff8c00] font-bold uppercase tracking-widest">Opcjonalne</span>
-                                <ul class="text-[9px] text-gray-500 mt-1 uppercase leading-tight">
+                                <span class="text-[9px] text-[#ff8c00] font-bold uppercase tracking-widest">Opcjonalne</span>
+                                <ul class="text-[10px] text-gray-500 mt-1 uppercase leading-tight">
                                     ${p.extra_features.map(f => `<li class="mb-1">• ${f}</li>`).join('')}
                                 </ul>
                             </div>
