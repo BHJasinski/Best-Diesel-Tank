@@ -20,133 +20,121 @@
             scroll-behavior: smooth;
         }
 
-        /* --- NOWA MECHANIKA LOGO BDT --- */
+        /* --- LOGO BDT - WIĘKSZE I CZYTELNE --- */
         .logo-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s ease;
         }
-        
         .logo-bdt {
-            height: 60px; /* Możesz dostosować wysokość */
+            height: 65px; /* Wysokość na mobile */
             width: auto;
-            filter: drop-shadow(0 0 0px rgba(77, 187, 60, 0));
-            transition: all 0.4s ease;
-            animation: logo-glow 3s infinite alternate;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(77, 187, 60, 0.3));
         }
-
-        .logo-wrapper:hover {
-            transform: scale(1.08);
-        }
-
-        .logo-wrapper:hover .logo-bdt {
-            filter: drop-shadow(0 0 15px rgba(77, 187, 60, 0.6));
-        }
-
-        @keyframes logo-glow {
-            from { filter: drop-shadow(0 0 2px rgba(77, 187, 60, 0.2)); }
-            to { filter: drop-shadow(0 0 8px rgba(77, 187, 60, 0.5)); }
+        @media (min-width: 768px) {
+            .logo-bdt { height: 90px; } /* Wysokość na laptopie */
         }
 
         .logo-sub {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             letter-spacing: 2px;
             color: var(--fs-green);
             font-weight: 700;
             text-transform: uppercase;
-            margin-top: 4px;
-            opacity: 0.9;
+            margin-top: 2px;
         }
 
-        /* --- RESZTA STYLÓW --- */
         .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
         .fs-border:hover { border-color: var(--fs-green); box-shadow: 0 0 15px rgba(77, 187, 60, 0.3); }
         .stat-bar { height: 6px; background: #3d4147; border-radius: 2px; overflow: hidden; }
         .stat-fill { height: 100%; background: var(--fs-green); transition: width 1s ease-out; }
         .btn-action { background-color: var(--fs-orange); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: all 0.2s; }
         .btn-action:hover { transform: scale(1.05); background-color: #ffffff; color: #000; }
+        
         .category-btn { background: #2a2d31; border: 1px solid #3d4147; transition: all 0.3s; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); }
-        .category-btn.active { background: var(--fs-green); color: black; font-weight: bold; border-color: var(--fs-green); }
+        .category-btn.active { background: var(--fs-green); color: black; font-weight: bold; }
+        
         .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-6 py-2">
+    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-4 py-2">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             
-            <div class="hidden md:flex space-x-8 font-semibold uppercase tracking-widest text-xs">
-                <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Maszyny</a>
-                <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Kontakt</a>
+            <div class="hidden lg:flex space-x-8 font-semibold uppercase tracking-widest text-xs">
+                <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Katalog Maszyn</a>
+                <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Szybka Wycena</a>
             </div>
 
             <div class="logo-wrapper cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <img src="logo%20BDT.png" alt="Best Diesel Tank Logo" class="logo-bdt">
-                <span class="logo-sub">Certyfikowany Dealer JFC</span>
+                <img src="logo%20BDT.png" alt="Best Diesel Tank" class="logo-bdt">
+                <span class="logo-sub font-bold italic">Certyfikowany Dealer JFC</span>
             </div>
 
             <div class="flex items-center space-x-4">
-                <div class="hidden sm:block text-right">
-                    <div class="text-[#ff8c00] font-bold text-xs animate-pulse leading-none">EKSPERT DOSTĘPNY</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-tighter">Doradztwo techniczne</div>
+                <div class="hidden sm:block text-right text-[10px] text-gray-400 uppercase tracking-tighter">
+                    <div class="text-[#ff8c00] font-bold animate-pulse">Doradca Online</div>
+                    <div>Dostępny teraz</div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <header class="relative h-[40vh] flex items-center justify-center overflow-hidden bg-black border-b border-gray-800">
+    <header class="relative h-[35vh] flex items-center justify-center overflow-hidden bg-black border-b border-gray-800">
         <div class="absolute inset-0 opacity-30">
             <img src="https://images.unsplash.com/photo-1590486803833-ffc475d491bc?auto=format&fit=crop&q=80" alt="Farm" class="w-full h-full object-cover">
         </div>
         <div class="relative z-10 text-center px-4">
             <h1 class="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-2">
-                Profesjonalne <span class="text-[#4dbb3c]">Zbiorniki</span>
+                Zbiorniki <span class="text-[#4dbb3c]">Dla Profesjonalistów</span>
             </h1>
-            <p class="text-xs md:text-lg text-gray-300 max-w-3xl mx-auto font-light uppercase tracking-[0.3em]">
-                Best Diesel Tank – Niezależna Jakość
+            <p class="text-[10px] md:text-sm text-gray-300 max-w-3xl mx-auto font-light uppercase tracking-[0.4em]">
+                Best Diesel Tank – Jakość Potwierdzona Certyfikatem
             </p>
         </div>
     </header>
 
-    <section id="katalog" class="py-12 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-            <div class="flex flex-wrap justify-center gap-3">
-                <button onclick="changeCategory('diesel', this)" class="category-btn active px-6 py-2 uppercase text-xs">Olej Napędowy</button>
-                <button onclick="changeCategory('adblue', this)" class="category-btn px-6 py-2 uppercase text-xs">AdBlue</button>
-                <button onclick="changeCategory('woda', this)" class="category-btn px-6 py-2 uppercase text-xs">Woda</button>
-                <button onclick="changeCategory('olej', this)" class="category-btn px-6 py-2 uppercase text-xs">Olej Opałowy</button>
+    <section id="katalog" class="py-10 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-8">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="changeCategory('diesel', this)" class="category-btn active px-4 py-2 uppercase text-[10px]">Olej Napędowy</button>
+                <button onclick="changeCategory('adblue', this)" class="category-btn px-4 py-2 uppercase text-[10px]">AdBlue</button>
+                <button onclick="changeCategory('woda', this)" class="category-btn px-4 py-2 uppercase text-[10px]">Woda</button>
             </div>
         </div>
 
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </section>
 
-    <section id="kontakt" class="py-16 bg-[#141517] border-y-2 border-gray-800">
-        <div class="max-w-4xl mx-auto px-6">
+    <section id="kontakt" class="py-12 bg-[#141517] border-y-2 border-gray-800">
+        <div class="max-w-4xl mx-auto px-4">
             <div class="bg-[#2a2d31] p-6 fs-border">
-                <h2 class="text-3xl font-bold uppercase mb-6 italic text-[#ff8c00]">Zapytaj o Best Diesel Tank</h2>
+                <h2 class="text-2xl font-bold uppercase mb-6 italic text-[#ff8c00]">Zapytaj o Best Diesel Tank</h2>
                 <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="md:col-span-2">
-                        <input type="text" id="selected_model" placeholder="Wybierz model z katalogu" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 text-[#4dbb3c] font-bold outline-none" readonly>
+                        <input type="text" id="selected_model" placeholder="Model" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 text-[#4dbb3c] font-bold outline-none" readonly>
                     </div>
-                    <input type="text" id="name" placeholder="Imię / Firma" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
-                    <input type="tel" id="phone" placeholder="Numer telefonu" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
+                    <input type="text" id="name" placeholder="Imię / Nazwa firmy" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none text-white">
+                    <input type="tel" id="phone" placeholder="Telefon" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none text-white">
                     <div class="md:col-span-2">
-                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-4 text-xl font-bold text-black uppercase">Wyślij prośbę o kontakt</button>
+                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-4 text-xl font-bold text-black uppercase">Wyślij do doradcy</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-gray-700 text-[10px] uppercase tracking-[0.5em]">
-        Best Diesel Tank &copy; 2026 | Niezależny Dystrybutor Certyfikowany JFC
+    <footer class="py-8 text-center text-gray-700 text-[10px] uppercase tracking-[0.5em]">
+        Best Diesel Tank &copy; 2026 | Dealer Premium JFC
     </footer>
 
     <script>
-        // Przykład bazy z Twoimi nazwami pól
         const db = [
             {
                 id: "JFC-2500-DUO",
@@ -154,8 +142,29 @@
                 name: "JFC 2500 Diesel Duo",
                 vol: "2500 L",
                 stats: { capacity: 45, durability: 98 },
-                features: ["Pompa 72 l/min", "Atest UDT", "Dwupłaszczowy"],
-                img: "https://via.placeholder.com/400x300/2a2d31/4dbb3c?text=2500+DUO"
+                // TWOJE ZDJĘCIA AVIF
+                images: [
+                    "2500_1.avif", "2500_2.avif", "2500_3.avif", 
+                    "2500_4.avif", "2500_5.avif", "2500_6.avif", "2500_7.avif"
+                ],
+                // PODSTAWOWE
+                base_features: [
+                    "Skrzynia z zamkiem na klucz",
+                    "Wąż ssący z filtrem i zaworem",
+                    "Pompa 72 l/min 230V",
+                    "Filtr paliwa szklany",
+                    "Licznik cyfrowy",
+                    "Wąż 8m / Pistolet A60",
+                    "Automatyczny wyłącznik"
+                ],
+                // OPCJONALNE
+                extra_features: [
+                    "Zwijadło 6-20m",
+                    "Oświetlenie LED szafy",
+                    "Pompy do 100 l/min",
+                    "Monitoring SMDP / XTRACK",
+                    "Dolna linia napełniająca"
+                ]
             }
         ];
 
@@ -164,21 +173,49 @@
             grid.innerHTML = '';
             const filtered = db.filter(item => item.cat === category);
             
-            filtered.forEach(p => {
+            filtered.forEach((p, idx) => {
+                const mainImgId = `main-img-${idx}`;
                 grid.innerHTML += `
-                    <div class="fs-panel fs-border p-6 rounded-sm bg-[#2a2d31] relative group animate-fade-in">
-                        <div class="h-40 flex items-center justify-center mb-4">
-                            <img src="${p.img}" alt="${p.name}" class="max-h-full group-hover:scale-110 transition-transform duration-500">
+                    <div class="fs-panel fs-border p-5 bg-[#2a2d31] animate-fade-in flex flex-col h-full">
+                        
+                        <div class="h-56 bg-black rounded mb-3 flex items-center justify-center overflow-hidden border border-gray-800">
+                            <img id="${mainImgId}" src="${p.images[0]}" class="max-h-full max-w-full object-contain">
                         </div>
-                        <h3 class="text-xl font-bold uppercase italic mb-4 border-l-4 border-[#4dbb3c] pl-3">${p.name}</h3>
-                        <div class="space-y-3 mb-6">
-                            <div class="text-[10px] uppercase text-gray-500 flex justify-between"><span>Pojemność</span><span>${p.vol}</span></div>
+
+                        <div class="flex gap-1 mb-4 overflow-x-auto pb-2 scrollbar-hide">
+                            ${p.images.map(img => `
+                                <img src="${img}" 
+                                     onclick="document.getElementById('${mainImgId}').src='${img}'"
+                                     class="w-10 h-10 object-cover border border-gray-700 hover:border-[#4dbb3c] cursor-pointer">
+                            `).join('')}
+                        </div>
+
+                        <h3 class="text-xl font-bold uppercase italic mb-2 border-l-4 border-[#4dbb3c] pl-3 leading-tight">${p.name}</h3>
+                        
+                        <div class="mb-4">
+                            <div class="text-[9px] uppercase text-gray-500 flex justify-between"><span>Pojemność magazynowa</span><span>${p.vol}</span></div>
                             <div class="stat-bar"><div class="stat-fill" style="width: ${p.stats.capacity}%"></div></div>
                         </div>
-                        <ul class="text-[10px] text-gray-400 mb-6 grid grid-cols-2 gap-1 uppercase">
-                            ${p.features.map(f => `<li class="flex items-center"><span class="w-1 h-1 bg-[#4dbb3c] mr-2"></span>${f}</li>`).join('')}
-                        </ul>
-                        <button onclick="selectForContact('${p.name}')" class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-3 text-xs font-bold uppercase transition-all">Konfiguruj</button>
+
+                        <div class="grid grid-cols-2 gap-4 flex-grow">
+                            <div>
+                                <span class="text-[8px] text-[#4dbb3c] font-bold uppercase tracking-widest">Podstawowe</span>
+                                <ul class="text-[9px] text-gray-400 mt-1 uppercase leading-tight">
+                                    ${p.base_features.map(f => `<li class="mb-1">• ${f}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div>
+                                <span class="text-[8px] text-[#ff8c00] font-bold uppercase tracking-widest">Opcjonalne</span>
+                                <ul class="text-[9px] text-gray-500 mt-1 uppercase leading-tight">
+                                    ${p.extra_features.map(f => `<li class="mb-1">• ${f}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button onclick="selectForContact('${p.name}')" 
+                                class="w-full mt-6 bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-4 text-xs font-black uppercase transition-all tracking-widest">
+                            KONFIGURUJ ZESTAW
+                        </button>
                     </div>
                 `;
             });
@@ -191,7 +228,7 @@
         }
 
         function selectForContact(model) {
-            document.getElementById('selected_model').value = model;
+            document.getElementById('selected_model').value = "BEST DIESEL TANK: " + model;
             document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
         }
 
