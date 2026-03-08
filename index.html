@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JFC - Twoja Baza Paliwowa | Professional Equipment</title>
+    <title>Best Diesel Tank | JFC Professional Equipment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -19,95 +19,103 @@
             color: #ffffff;
             scroll-behavior: smooth;
         }
-        .fs-border {
-            border: 2px solid #3d4147;
-            transition: all 0.3s ease;
+
+        /* --- MECHANIKA LOGO --- */
+        .logo-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        .fs-border:hover {
-            border-color: var(--fs-green);
-            box-shadow: 0 0 15px rgba(77, 187, 60, 0.3);
-        }
-        .stat-bar {
-            height: 6px;
-            background: #3d4147;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .stat-fill {
-            height: 100%;
-            background: var(--fs-green);
-            transition: width 1s ease-out;
-        }
-        .btn-action {
-            background-color: var(--fs-orange);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            transition: all 0.2s;
-        }
-        .btn-action:hover {
+        .logo-container:hover {
             transform: scale(1.05);
-            background-color: #ffffff;
-            color: #000;
         }
-        .category-btn {
-            background: #2a2d31;
-            border: 1px solid #3d4147;
-            transition: all 0.3s;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+        .logo-text {
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(90deg, #fff, #888, #fff);
+            background-repeat: no-repeat;
+            background-size: 80%;
+            animation: shine 5s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
         }
-        .category-btn.active {
-            background: var(--fs-green);
-            color: black;
-            font-weight: bold;
-            border-color: var(--fs-green);
+        @keyframes shine {
+            0% { background-position: -500%; }
+            100% { background-position: 500%; }
         }
-        .animate-fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
+        .logo-sub {
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: var(--fs-green);
+            display: block;
+            text-align: center;
+            margin-top: -5px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
+        /* --- RESZTA STYLÓW --- */
+        .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
+        .fs-border:hover { border-color: var(--fs-green); box-shadow: 0 0 15px rgba(77, 187, 60, 0.3); }
+        .stat-bar { height: 6px; background: #3d4147; border-radius: 2px; overflow: hidden; }
+        .stat-fill { height: 100%; background: var(--fs-green); transition: width 1s ease-out; }
+        .btn-action { background-color: var(--fs-orange); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: all 0.2s; }
+        .btn-action:hover { transform: scale(1.05); background-color: #ffffff; color: #000; }
+        .category-btn { background: #2a2d31; border: 1px solid #3d4147; transition: all 0.3s; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); }
+        .category-btn.active { background: var(--fs-green); color: black; font-weight: bold; border-color: var(--fs-green); }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-6 py-4 flex justify-between items-center">
-        <div class="text-3xl font-bold tracking-tighter text-white">
-            <span class="text-[#4dbb3c]">JFC</span> SHOP <span class="text-sm font-light text-gray-400 italic underline">PRO</span>
+    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-6 py-3">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <div class="hidden md:flex space-x-6 font-semibold uppercase tracking-widest text-xs">
+                <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Katalog</a>
+                <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Wyślij zapytanie</a>
+            </div>
+
+            <div class="logo-container text-center" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="logo-text text-2xl md:text-4xl">
+                    Best <span class="text-[#4dbb3c]">Diesel</span> Tank
+                </div>
+                <span class="logo-sub font-bold italic">Authorized JFC Dealer</span>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <div class="hidden sm:block text-right">
+                    <div class="text-[#ff8c00] font-bold text-xs animate-pulse leading-none">STATUS: ONLINE</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-tighter">Support 24/7</div>
+                </div>
+                <div class="w-8 h-8 bg-[#4dbb3c] rounded-full flex items-center justify-center text-black font-bold">!</div>
+            </div>
         </div>
-        <div class="hidden md:flex space-x-8 font-semibold uppercase tracking-widest text-sm">
-            <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Sprzęt</a>
-            <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Serwis & Kontakt</a>
-        </div>
-        <div class="text-[#ff8c00] font-bold animate-pulse text-xs md:text-base">● DEALER DOSTĘPNY</div>
     </nav>
 
-    <header class="relative h-[60vh] flex items-center justify-center overflow-hidden bg-black">
-        <div class="absolute inset-0 opacity-50">
+    <header class="relative h-[50vh] flex items-center justify-center overflow-hidden bg-black">
+        <div class="absolute inset-0 opacity-40">
             <img src="https://images.unsplash.com/photo-1590486803833-ffc475d491bc?auto=format&fit=crop&q=80" alt="Farm" class="w-full h-full object-cover">
         </div>
         <div class="relative z-10 text-center px-4">
-            <h1 class="text-5xl md:text-8xl font-black uppercase italic tracking-tighter mb-2">
-                Baza <span class="text-[#4dbb3c]">Paliwowa</span>
+            <h1 class="text-4xl md:text-7xl font-black uppercase italic tracking-tighter mb-2">
+                ZBIORNIKI <span class="text-[#4dbb3c]">KLASY PREMIUM</span>
             </h1>
-            <p class="text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10 font-light uppercase tracking-widest">
-                Profesjonalne systemy magazynowania JFC Polska
+            <p class="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 font-light uppercase tracking-widest">
+                Dostarczamy paliwo tam, gdzie pracują najlepsi.
             </p>
-            <a href="#katalog" class="btn-action inline-block px-10 py-4 text-xl font-bold text-black uppercase">
-                Przeglądaj Maszyny
-            </a>
         </div>
     </header>
 
-    <section id="katalog" class="py-16 px-6 max-w-7xl mx-auto">
-        
+    <section id="katalog" class="py-12 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold uppercase italic mb-8">Wybierz kategorię osprzętu</h2>
             <div class="flex flex-wrap justify-center gap-3">
-                <button onclick="changeCategory('diesel', this)" class="category-btn active px-8 py-3 uppercase text-sm">Olej Napędowy</button>
-                <button onclick="changeCategory('adblue', this)" class="category-btn px-8 py-3 uppercase text-sm">AdBlue</button>
-                <button onclick="changeCategory('woda', this)" class="category-btn px-8 py-3 uppercase text-sm">Zbiorniki na Wodę</button>
-                <button onclick="changeCategory('olej', this)" class="category-btn px-8 py-3 uppercase text-sm">Olej Opałowy</button>
+                <button onclick="changeCategory('diesel', this)" class="category-btn active px-6 py-2 uppercase text-xs">Olej Napędowy</button>
+                <button onclick="changeCategory('adblue', this)" class="category-btn px-6 py-2 uppercase text-xs">AdBlue</button>
+                <button onclick="changeCategory('woda', this)" class="category-btn px-6 py-2 uppercase text-xs">Woda</button>
+                <button onclick="changeCategory('olej', this)" class="category-btn px-6 py-2 uppercase text-xs">Olej Opałowy</button>
             </div>
         </div>
 
@@ -115,48 +123,37 @@
             </div>
     </section>
 
-    <section id="kontakt" class="py-20 bg-[#141517] border-y-2 border-gray-800">
+    <section id="kontakt" class="py-16 bg-[#141517] border-y-2 border-gray-800">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="bg-[#2a2d31] p-8 fs-border">
-                <h2 class="text-4xl font-bold uppercase mb-2 italic text-[#ff8c00]">Zapytaj o konfigurację</h2>
-                <p class="text-gray-400 mb-8 italic uppercase text-sm tracking-widest">Dealer JFC skontaktuje się z Tobą w celu dopasowania wyposażenia.</p>
-                
-                <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-[#2a2d31] p-6 fs-border">
+                <h2 class="text-3xl font-bold uppercase mb-6 italic text-[#ff8c00]">Szybka wycena - Best Diesel Tank</h2>
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="md:col-span-2">
-                        <label class="block uppercase text-xs font-bold mb-2 text-gray-500">Wybrany Model</label>
-                        <input type="text" id="selected_model" class="w-full bg-[#1a1c1e] border border-gray-700 p-4 text-[#4dbb3c] font-bold outline-none" readonly>
+                        <input type="text" id="selected_model" placeholder="Model" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 text-[#4dbb3c] font-bold outline-none" readonly>
                     </div>
-                    <div>
-                        <label class="block uppercase text-xs font-bold mb-2 text-gray-500">Imię / Nazwa Firmy</label>
-                        <input type="text" id="name" class="w-full bg-[#1a1c1e] border border-gray-700 p-4 focus:border-[#4dbb3c] outline-none">
-                    </div>
-                    <div>
-                        <label class="block uppercase text-xs font-bold mb-2 text-gray-500">Telefon</label>
-                        <input type="tel" id="phone" class="w-full bg-[#1a1c1e] border border-gray-700 p-4 focus:border-[#4dbb3c] outline-none">
-                    </div>
+                    <input type="text" id="name" placeholder="Imię / Nazwa firmy" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
+                    <input type="tel" id="phone" placeholder="Telefon" class="w-full bg-[#1a1c1e] border border-gray-700 p-3 outline-none">
                     <div class="md:col-span-2">
-                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-5 text-2xl font-bold text-black uppercase shadow-lg shadow-orange-500/20">Wyślij zgłoszenie</button>
+                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-4 text-xl font-bold text-black uppercase">Wyślij do doradcy</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-gray-600 text-xs uppercase tracking-[0.3em]">
-        &copy; 2024 JFC Dealer Network | Designed for Professional Farmers
+    <footer class="py-10 text-center text-gray-700 text-[10px] uppercase tracking-[0.5em]">
+        Best Diesel Tank &copy; 2024 | Dealer Premium JFC Polska
     </footer>
 
     <script>
-        // TWOJA BAZA DANYCH PRODUKTÓW
         const db = [
             {
                 id: "JFC-2500-DUO",
                 cat: "diesel",
                 name: "JFC 2500 Diesel Duo",
                 vol: "2500 L",
-                flow: "72 l/min",
-                stats: { capacity: 45, durability: 95, flow: 80 },
-                features: ["Pompa 230V", "Licznik Cyfrowy", "Wąż 8m", "Atest UDT"],
+                stats: { capacity: 45, durability: 98 },
+                features: ["Pompa 72 l/min", "Atest UDT", "System DuoSeal"],
                 img: "https://via.placeholder.com/400x300/2a2d31/4dbb3c?text=JFC+2500+DUO"
             },
             {
@@ -164,55 +161,32 @@
                 cat: "diesel",
                 name: "JFC 5000 Professional",
                 vol: "5000 L",
-                flow: "79 l/min",
-                stats: { capacity: 80, durability: 90, flow: 90 },
-                features: ["Szklany Filtr", "Zwijadło", "Monitoring SMDP"],
+                stats: { capacity: 85, durability: 95 },
+                features: ["Zwijadło 8-12m", "Filtr Szklany", "Wysoka Wydajność"],
                 img: "https://via.placeholder.com/400x300/2a2d31/4dbb3c?text=JFC+5000+PRO"
-            },
-            {
-                id: "JFC-WATER-1",
-                cat: "woda",
-                name: "Zbiornik na Wodę 1500",
-                vol: "1500 L",
-                flow: "Brak",
-                stats: { capacity: 30, durability: 85, flow: 0 },
-                features: ["Atest PZH", "Odporność UV", "Wzmocniona Konstrukcja"],
-                img: "https://via.placeholder.com/400x300/2a2d31/3498db?text=WODA+1500L"
             }
         ];
 
         function renderProducts(category) {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = '';
-            
             const filtered = db.filter(item => item.cat === category);
             
             filtered.forEach(p => {
                 grid.innerHTML += `
                     <div class="fs-panel fs-border p-6 rounded-sm bg-[#2a2d31] relative group animate-fade-in">
-                        <div class="absolute top-4 right-4 text-[10px] text-gray-500 font-mono">CODE: ${p.id}</div>
-                        
-                        <div class="h-40 flex items-center justify-center mb-6">
-                            <img src="${p.img}" alt="${p.name}" class="max-h-full group-hover:scale-105 transition-transform duration-500">
+                        <div class="h-40 flex items-center justify-center mb-4">
+                            <img src="${p.img}" alt="${p.name}" class="max-h-full group-hover:scale-110 transition-transform duration-500">
                         </div>
-
-                        <h3 class="text-2xl font-bold uppercase italic mb-4 border-l-4 border-[#4dbb3c] pl-3">${p.name}</h3>
-
+                        <h3 class="text-xl font-bold uppercase italic mb-4 border-l-4 border-[#4dbb3c] pl-3">${p.name}</h3>
                         <div class="space-y-3 mb-6">
-                            <div class="text-[10px] uppercase font-bold text-gray-500 flex justify-between"><span>Pojemność</span><span>${p.vol}</span></div>
+                            <div class="text-[10px] uppercase text-gray-500 flex justify-between"><span>Pojemność</span><span>${p.vol}</span></div>
                             <div class="stat-bar"><div class="stat-fill" style="width: ${p.stats.capacity}%"></div></div>
-                            
-                            <div class="text-[10px] uppercase font-bold text-gray-500 flex justify-between"><span>Wytrzymałość</span><span>Maksymalna</span></div>
-                            <div class="stat-bar"><div class="stat-fill" style="width: ${p.stats.durability}%"></div></div>
                         </div>
-
-                        <ul class="text-xs text-gray-400 mb-8 grid grid-cols-2 gap-2">
-                            ${p.features.map(f => `<li class="flex items-center"><span class="w-1.5 h-1.5 bg-[#4dbb3c] mr-2"></span>${f}</li>`).join('')}
+                        <ul class="text-[10px] text-gray-400 mb-6 grid grid-cols-2 gap-1 uppercase">
+                            ${p.features.map(f => `<li class="flex items-center"><span class="w-1 h-1 bg-[#4dbb3c] mr-2"></span>${f}</li>`).join('')}
                         </ul>
-
-                        <button onclick="selectForContact('${p.name}')" class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-3 font-bold uppercase transition-all">
-                            Konfiguruj Maszynę
-                        </button>
+                        <button onclick="selectForContact('${p.name}')" class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-3 text-xs font-bold uppercase transition-all">Konfiguruj</button>
                     </div>
                 `;
             });
@@ -230,14 +204,11 @@
         }
 
         function confirmOrder() {
-            const model = document.getElementById('selected_model').value;
             const name = document.getElementById('name').value;
-            if(!model) { alert("Wybierz najpierw model zbiornika z katalogu!"); return; }
-            if(!name) { alert("Podaj swoje imię!"); return; }
-            alert("ZGŁOSZENIE WYSŁANE!\nModel: " + model + "\nDealer skontaktuje się z Tobą telefonicznie.");
+            if(name) alert("Wiadomość wysłana! Doradca Best Diesel Tank oddzwoni do Państwa.");
+            else alert("Proszę podać dane kontaktowe.");
         }
 
-        // Inicjalizacja
         window.onload = () => renderProducts('diesel');
     </script>
 </body>
