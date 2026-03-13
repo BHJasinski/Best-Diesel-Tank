@@ -41,9 +41,6 @@
         .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
         .fs-border:hover { border-color: var(--fs-green); box-shadow: 0 0 20px rgba(77, 187, 60, 0.2); }
         
-        .stat-bar { height: 4px; background: #3d4147; border-radius: 2px; overflow: hidden; }
-        .stat-fill { height: 100%; background: var(--fs-green); }
-
         .category-btn { 
             background: #2a2d31; 
             border: 1px solid #3d4147; 
@@ -60,7 +57,6 @@
         }
         .btn-action:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
         .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -69,7 +65,6 @@
 
     <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-4 py-2">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
-            
             <div class="hidden lg:flex flex-1 space-x-6 font-semibold uppercase tracking-widest text-[10px]">
                 <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Oferta Zbiorników</a>
                 <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Kontakt</a>
@@ -109,34 +104,38 @@
                 <button onclick="changeCategory('combi', this)" class="category-btn px-6 py-3 uppercase text-xs">Truck Tank COMBI</button>
             </div>
         </div>
-
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            </div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </section>
 
     <section id="kontakt" class="py-16 bg-[#141517] border-y border-gray-800">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="bg-[#2a2d31] p-8 fs-border relative">
-                <h2 class="text-3xl font-bold uppercase italic text-[#ff8c00] mb-2">Konfiguracja i Wycena</h2>
-                <p class="text-gray-400 text-xs uppercase tracking-widest mb-8">Zostaw numer, oddzwonimy z ofertą w 15 minut</p>
+                <h2 class="text-3xl font-bold uppercase italic text-[#ff8c00] mb-2">Kontakt z Ekspertem</h2>
+                <p class="text-gray-400 text-xs uppercase tracking-widest mb-8">Masz pytania? Chętnie doradzę w wyborze zbiornika</p>
                 
-                <form class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                    <div class="md:col-span-2">
-                        <label class="text-[10px] uppercase text-gray-500 ml-2">Wybrany model:</label>
-                        <input type="text" id="selected_model" class="w-full bg-[#1a1c1e] border border-gray-700 p-4 text-[#4dbb3c] font-bold outline-none rounded" readonly>
-                    </div>
-                    <input type="text" id="name" placeholder="Imię / Nazwa firmy" class="w-full bg-[#1a1c1e] border border-gray-700 p-4 outline-none text-white rounded">
-                    <input type="tel" id="phone" placeholder="Numer telefonu" class="w-full bg-[#1a1c1e] border border-gray-700 p-4 outline-none text-white rounded">
-                    <div class="md:col-span-2">
-                        <button type="button" onclick="confirmOrder()" class="btn-action w-full py-5 text-xl font-black text-black uppercase tracking-tighter">Poproś o kontakt eksperta</button>
-                    </div>
-                </form>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <a href="tel:+48509999979" class="btn-action flex flex-col items-center justify-center py-6 px-4 rounded transition-all">
+                        <span class="text-black text-[10px] font-bold uppercase mb-1">Zadzwoń do mnie</span>
+                        <span class="text-black text-2xl font-black tracking-tighter">+48 509 999 979</span>
+                    </a>
+                    
+                    <a href="mailto:bestdieseltank@o2.pl" class="bg-[#3d4147] hover:bg-[#4dbb3c] flex flex-col items-center justify-center py-6 px-4 rounded transition-all group">
+                        <span class="text-gray-400 group-hover:text-black text-[10px] font-bold uppercase mb-1">Napisz wiadomość</span>
+                        <span class="text-white group-hover:text-black text-xl font-black tracking-tighter">bestdieseltank@o2.pl</span>
+                    </a>
+                </div>
+
+                <div class="mt-8 pt-8 border-t border-gray-700">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest leading-relaxed">
+                        Krzysztof Darczuk<br>Specjalista ds. Systemów Magazynowania Paliw
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="py-10 text-center text-gray-600 text-[9px] uppercase tracking-[0.6em]">
-        Best Diesel Tank &copy; 2026 | Wszelkie prawa zastrzeżone
+        Best Diesel Tank &copy; 2026 | Technologia JFC Polska | Wszelkie prawa zastrzeżone
     </footer>
 
     <script>
@@ -303,9 +302,9 @@
                             </div>
                         </div>
 
-                        <button onclick="selectForContact('${p.name}')" 
+                        <button onclick="scrollToContact()" 
                                 class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-4 text-xs font-black uppercase transition-all tracking-widest">
-                            KONFIGURUJ TEN MODEL
+                            ZAPYTAJ O TEN MODEL
                         </button>
                     </div>
                 `;
@@ -318,15 +317,8 @@
             renderProducts(cat);
         }
 
-        function selectForContact(model) {
-            document.getElementById('selected_model').value = model;
+        function scrollToContact() {
             document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function confirmOrder() {
-            const name = document.getElementById('name').value;
-            if(name) alert("Zapytanie wysłane! Doradca BDT skontaktuje się z Tobą telefonicznie.");
-            else alert("Proszę wpisać imię lub nazwę firmy.");
         }
 
         window.onload = () => renderProducts('stationary');
