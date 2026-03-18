@@ -10,8 +10,8 @@
         :root {
             --fs-green: #4dbb3c;
             --fs-orange: #ff8c00;
-            --fs-dark: #1a1c1e;
-            --fs-panel: #2a2d31;
+            --fs-dark: #0f1113;
+            --fs-panel: rgba(42, 45, 49, 0.7);
         }
         body {
             font-family: 'Rajdhani', sans-serif;
@@ -20,121 +20,136 @@
             scroll-behavior: smooth;
         }
 
-        /* LOGO CENTROWANIE I ROZMIAR */
-        .logo-wrapper { transition: transform 0.3s ease; }
+        /* DYNAMICZNE LOGO */
+        .logo-wrapper { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: logo-float 4s ease-in-out infinite;
+        }
         .logo-bdt {
-            height: 70px;
+            height: 100px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px rgba(77, 187, 60, 0.4));
+            filter: drop-shadow(0 0 15px rgba(77, 187, 60, 0.3));
         }
-        @media (min-width: 768px) { .logo-bdt { height: 100px; } }
+        @media (min-width: 768px) { .logo-bdt { height: 140px; } }
 
-        .logo-sub {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            color: var(--fs-green);
-            font-weight: 700;
-            text-transform: uppercase;
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 15px rgba(77, 187, 60, 0.3)); }
+            50% { transform: translateY(-5px) scale(1.02); filter: drop-shadow(0 0 25px rgba(77, 187, 60, 0.5)); }
+        }
+
+        /* EFEKT SZKŁA (GLASSMORPHISM) */
+        .glass-panel {
+            background: var(--fs-panel);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
-        .fs-border:hover { border-color: var(--fs-green); box-shadow: 0 0 20px rgba(77, 187, 60, 0.2); }
+        .fs-border:hover { 
+            border-color: var(--fs-green); 
+            box-shadow: 0 0 30px rgba(77, 187, 60, 0.2);
+            transform: translateY(-5px);
+        }
         
         .category-btn { 
             background: #2a2d31; 
-            border: 1px solid #3d4147; 
+            border: 1px solid #4dbb3c; 
             transition: all 0.3s; 
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
-        .category-btn.active { background: var(--fs-green); color: black; border-color: var(--fs-green); }
+        .category-btn.active { background: var(--fs-green); color: black; box-shadow: 0 0 15px var(--fs-green); }
         
         .btn-action { 
             background-color: var(--fs-orange); 
             clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%); 
             transition: all 0.2s; 
         }
-        .btn-action:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
 
-        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <nav class="sticky top-0 z-50 bg-[#1a1c1e]/95 backdrop-blur-md border-b-2 border-[#4dbb3c] px-4 py-2">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
-            <div class="hidden lg:flex flex-1 space-x-6 font-semibold uppercase tracking-widest text-[10px]">
+    <nav class="sticky top-0 z-50 bg-[#0f1113]/90 backdrop-blur-xl border-b-2 border-[#4dbb3c] px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="hidden lg:flex flex-1 space-x-8 font-bold uppercase tracking-widest text-sm">
                 <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Oferta Zbiorników</a>
                 <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Kontakt</a>
             </div>
 
             <div class="logo-wrapper cursor-pointer flex-1 flex flex-col items-center" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <img src="logo%20BDT.png" alt="Best Diesel Tank" class="logo-bdt">
-                <span class="logo-sub italic">Certyfikowany Dealer JFC</span>
+                <span class="text-[#4dbb3c] font-black uppercase tracking-[3px] text-xs italic mt-1">Certyfikowany Dealer JFC</span>
             </div>
 
             <div class="flex-1 flex justify-center md:justify-end items-center">
-                <div class="text-center md:text-right text-[10px] text-gray-400 uppercase tracking-tighter">
-                    <div class="text-[#ff8c00] font-bold animate-pulse">Eksperci BDT</div>
-                    <div>Dostępni: Pon - Pt 8:00 - 18:00</div>
+                <div class="text-center md:text-right text-sm text-gray-300 uppercase font-semibold">
+                    <div class="text-[#ff8c00] font-black text-base">Eksperci BDT</div>
+                    <div class="tracking-tighter">Dostępni: Pon - Pt 8:00 - 18:00</div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <header class="relative h-[30vh] flex items-center justify-center overflow-hidden bg-black">
-        <div class="absolute inset-0 opacity-20">
+    <header class="relative h-[40vh] flex items-center justify-center overflow-hidden bg-black">
+        <div class="absolute inset-0 opacity-30">
             <img src="https://images.unsplash.com/photo-1590486803833-ffc475d491bc?auto=format&fit=crop&q=80" alt="Farm" class="w-full h-full object-cover">
         </div>
         <div class="relative z-10 text-center px-4">
-            <h1 class="text-3xl md:text-5xl font-black uppercase italic tracking-tighter">
-                Niezależność <span class="text-[#4dbb3c]">Paliwowa</span>
+            <h1 class="text-4xl md:text-7xl font-black uppercase italic tracking-tighter leading-none">
+                NIEZALEŻNOŚĆ <span class="text-[#4dbb3c]">PALIWOWA</span>
             </h1>
-            <p class="text-[10px] text-gray-400 uppercase tracking-[0.5em] mt-2">Autoryzowany Dystrybutor JFC Polska</p>
+            <p class="text-sm md:text-lg text-gray-200 uppercase tracking-[0.3em] font-bold mt-4 bg-black/40 inline-block px-4 py-1">Autoryzowany Dystrybutor JFC Polska</p>
         </div>
     </header>
 
-    <section id="katalog" class="py-10 px-4 max-w-7xl mx-auto">
-        <div class="text-center mb-10">
-            <div class="flex flex-wrap justify-center gap-3">
-                <button onclick="changeCategory('stationary', this)" class="category-btn active px-6 py-3 uppercase text-xs">Stacjonarne</button>
-                <button onclick="changeCategory('truck', this)" class="category-btn px-6 py-3 uppercase text-xs">Truck Tank (Mobilne)</button>
-                <button onclick="changeCategory('combi', this)" class="category-btn px-6 py-3 uppercase text-xs">Truck Tank COMBI</button>
+    <section id="katalog" class="py-12 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="changeCategory('stationary', this)" class="category-btn active px-8 py-4 uppercase text-sm">Stacjonarne</button>
+                <button onclick="changeCategory('truck', this)" class="category-btn px-8 py-4 uppercase text-sm">Truck Tank (Mobilne)</button>
+                <button onclick="changeCategory('combi', this)" class="category-btn px-8 py-4 uppercase text-sm">Truck Tank COMBI</button>
             </div>
         </div>
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     </section>
 
-    <section id="kontakt" class="py-16 bg-[#141517] border-y border-gray-800">
+    <section id="kontakt" class="py-20 bg-[#0a0b0c] border-y border-gray-800">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <div class="bg-[#2a2d31] p-8 fs-border relative">
-                <h2 class="text-3xl font-bold uppercase italic text-[#ff8c00] mb-2">Kontakt z Ekspertem</h2>
-                <p class="text-gray-400 text-xs uppercase tracking-widest mb-8">Masz pytania? Chętnie doradzę w wyborze zbiornika</p>
+            <div class="glass-panel p-10 fs-border relative rounded-xl">
+                <h2 class="text-4xl font-black uppercase italic text-[#ff8c00] mb-4">Kontakt z Ekspertem</h2>
+                <p class="text-gray-300 text-base uppercase tracking-widest font-bold mb-10">Masz pytania? Chętnie doradzę w wyborze zbiornika</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <a href="tel:+48509999979" class="btn-action flex flex-col items-center justify-center py-6 px-4 rounded transition-all">
-                        <span class="text-black text-[10px] font-bold uppercase mb-1">Zadzwoń do mnie</span>
-                        <span class="text-black text-2xl font-black tracking-tighter">+48 509 999 979</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="tel:+48509999979" class="btn-action flex flex-col items-center justify-center py-8 px-6 rounded-lg transition-all shadow-xl">
+                        <span class="text-black text-xs font-bold uppercase mb-2">Zadzwoń do nas</span>
+                        <span class="text-black text-3xl font-black tracking-tighter">+48 509 999 979</span>
                     </a>
                     
-                    <a href="mailto:bestdieseltank@o2.pl" class="bg-[#3d4147] hover:bg-[#4dbb3c] flex flex-col items-center justify-center py-6 px-4 rounded transition-all group">
-                        <span class="text-gray-400 group-hover:text-black text-[10px] font-bold uppercase mb-1">Napisz wiadomość</span>
-                        <span class="text-white group-hover:text-black text-xl font-black tracking-tighter">bestdieseltank@o2.pl</span>
+                    <a href="mailto:bestdieseltank@o2.pl" class="bg-[#3d4147] hover:bg-[#4dbb3c] flex flex-col items-center justify-center py-8 px-6 rounded-lg transition-all group shadow-xl">
+                        <span class="text-gray-300 group-hover:text-black text-xs font-bold uppercase mb-2">Napisz wiadomość</span>
+                        <span class="text-white group-hover:text-black text-2xl font-black tracking-tighter">bestdieseltank@o2.pl</span>
                     </a>
                 </div>
 
-                <div class="mt-8 pt-8 border-t border-gray-700">
-                    <p class="text-[10px] text-gray-500 uppercase tracking-widest leading-relaxed">
-                        Krzysztof Darczuk<br>Specjalista ds. Systemów Magazynowania Paliw
+                <div class="mt-12 pt-8 border-t border-white/10">
+                    <p class="text-sm text-gray-400 uppercase tracking-widest leading-relaxed font-bold">
+                        Krzysztof Darczuk<br>
+                        <span class="text-[#4dbb3c]">Specjalista ds. Systemów Magazynowania Paliw</span>
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-gray-600 text-[9px] uppercase tracking-[0.6em]">
+    <footer class="py-12 text-center text-gray-500 text-xs uppercase tracking-[0.4em] font-bold">
         Best Diesel Tank &copy; 2026 | Technologia JFC Polska | Wszelkie prawa zastrzeżone
     </footer>
 
@@ -273,44 +288,45 @@
             
             filtered.forEach((p) => {
                 grid.innerHTML += `
-                    <div class="fs-panel fs-border p-6 bg-[#2a2d31] animate-fade-in flex flex-col h-full relative overflow-hidden">
-                        <div class="h-64 flex items-center justify-center mb-6">
+                    <div class="glass-panel fs-border p-8 animate-fade-in flex flex-col h-full relative overflow-hidden rounded-2xl">
+                        <div class="h-64 flex items-center justify-center mb-8 bg-white/5 rounded-xl p-4">
                             <img src="${p.images[0]}" alt="${p.name}" class="max-h-full max-w-full object-contain hover:scale-110 transition-transform duration-500">
                         </div>
 
-                        <h3 class="text-2xl font-bold uppercase italic border-l-4 border-[#4dbb3c] pl-4 mb-2 leading-tight">${p.name}</h3>
-                        <div class="flex justify-between items-center text-[10px] text-gray-500 uppercase font-semibold mb-4 bg-black/20 p-2">
-                            <span>Wymiary: ${p.dims}</span>
-                            <span class="text-[#4dbb3c]">${p.vol}</span>
+                        <h3 class="text-2xl font-black uppercase italic border-l-4 border-[#4dbb3c] pl-4 mb-4 leading-tight text-[#4dbb3c]">${p.name}</h3>
+                        
+                        <div class="flex flex-col gap-1 text-sm text-gray-300 uppercase font-bold mb-6 bg-black/40 p-3 rounded">
+                            <span class="flex justify-between"><span>Wymiary:</span> <span class="text-white font-black">${p.dims}</span></span>
+                            <span class="flex justify-between"><span>Pojemność:</span> <span class="text-[#4dbb3c] font-black">${p.vol}</span></span>
                         </div>
 
-                        <div class="mb-4">
-                             <div class="text-[9px] uppercase text-[#4dbb3c] font-bold mb-2 flex items-center">
-                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z"></path></svg>
-                                Kluczowe zalety:
+                        <div class="mb-6">
+                             <div class="text-xs uppercase text-[#4dbb3c] font-black mb-3 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z"></path></svg>
+                                Główne atuty:
                              </div>
-                             <ul class="text-[10px] text-gray-300 italic flex flex-wrap gap-x-3">
-                                ${p.advantages.map(a => `<li class="flex items-center"><span class="w-1 h-1 bg-gray-600 mr-1"></span>${a}</li>`).join('')}
+                             <ul class="text-sm text-gray-200 italic space-y-1">
+                                ${p.advantages.map(a => `<li class="flex items-center"><span class="w-2 h-2 bg-[#4dbb3c] mr-2 rounded-full"></span>${a}</li>`).join('')}
                              </ul>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4 flex-grow mb-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-grow mb-8">
                             <div>
-                                <span class="text-[9px] text-white/50 font-bold uppercase tracking-widest border-b border-gray-700 block mb-2">Standard</span>
-                                <ul class="text-[10px] text-gray-400 space-y-1">
+                                <span class="text-xs text-white/70 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie</span>
+                                <ul class="text-sm text-gray-400 space-y-1 font-semibold">
                                     ${p.base.map(f => `<li>• ${f}</li>`).join('')}
                                 </ul>
                             </div>
                             <div>
-                                <span class="text-[9px] text-[#ff8c00]/60 font-bold uppercase tracking-widest border-b border-gray-700 block mb-2">Opcje</span>
-                                <ul class="text-[10px] text-gray-500 space-y-1">
+                                <span class="text-xs text-[#ff8c00]/80 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Opcje</span>
+                                <ul class="text-sm text-gray-500 space-y-1 font-semibold">
                                     ${p.extra.map(f => `<li>• ${f}</li>`).join('')}
                                 </ul>
                             </div>
                         </div>
 
                         <button onclick="scrollToContact()" 
-                                class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-4 text-xs font-black uppercase transition-all tracking-widest">
+                                class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-5 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
                             ZAPYTAJ O TEN MODEL
                         </button>
                     </div>
