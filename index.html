@@ -11,13 +11,35 @@
             --fs-green: #4dbb3c;
             --fs-orange: #ff8c00;
             --fs-dark: #0f1113;
-            --fs-panel: rgba(42, 45, 49, 0.7);
+            --fs-panel: rgba(25, 28, 32, 0.75);
         }
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--fs-dark);
             color: #ffffff;
             scroll-behavior: smooth;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* DYNAMICZNE TŁO - CZĄSTECZKI */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* EFEKT SZKŁA (GLASSMORPHISM) */
+        .glass-panel {
+            background: var(--fs-panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
         /* DYNAMICZNE LOGO */
@@ -38,20 +60,10 @@
             50% { transform: translateY(-5px) scale(1.02); filter: drop-shadow(0 0 25px rgba(77, 187, 60, 0.5)); }
         }
 
-        /* EFEKT SZKŁA (GLASSMORPHISM) */
-        .glass-panel {
-            background: var(--fs-panel);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
         .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
         .fs-border:hover { 
             border-color: var(--fs-green); 
             box-shadow: 0 0 30px rgba(77, 187, 60, 0.2);
-            transform: translateY(-5px);
         }
         
         .category-btn { 
@@ -71,11 +83,32 @@
         }
         .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
 
+        /* ANIMACJA ROZWIJANIA */
+        .details-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-in;
+            opacity: 0;
+        }
+        .details-content.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        .toggle-details-btn svg {
+            transition: transform 0.3s ease;
+        }
+        .toggle-details-btn.active svg {
+            transform: rotate(180deg);
+        }
+
         .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body>
+
+    <canvas id="bg-canvas"></canvas>
 
     <nav class="sticky top-0 z-50 bg-[#0f1113]/90 backdrop-blur-xl border-b-2 border-[#4dbb3c] px-4 py-3">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
@@ -92,7 +125,7 @@
             <div class="flex-1 flex justify-center md:justify-end items-center">
                 <div class="text-center md:text-right text-sm text-gray-300 uppercase font-semibold">
                     <div class="text-[#ff8c00] font-black text-base">Eksperci BDT</div>
-                    <div class="tracking-tighter">Dostępni: Pon - Pt 8:00 - 21:00, Sob 10:00 - 18:00</div>
+                    <div class="tracking-tighter text-[10px] md:text-xs">Dostępni: Pon - Pt 8:00 - 21:00, Sob 10:00 - 18:00</div>
                 </div>
             </div>
         </div>
@@ -121,7 +154,7 @@
         <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     </section>
 
-    <section id="kontakt" class="py-20 bg-[#0a0b0c] border-y border-gray-800">
+    <section id="kontakt" class="py-20 border-y border-gray-800">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="glass-panel p-10 fs-border relative rounded-xl">
                 <h2 class="text-4xl font-black uppercase italic text-[#ff8c00] mb-4">Kontakt z Ekspertem</h2>
@@ -154,8 +187,8 @@
     </footer>
 
     <script>
+        // --- BAZA DANYCH (TREŚĆ NIERUSZONA) ---
         const db = [
-            // --- STACJONARNE ---
              {
                 id: "JFC-1300", cat: "stationary", name: "JFC 1300 Diesel", vol: "1300 L", dims: "165 × 120 × 180 cm",
                 images: ["img/jfc1300_1.png"],
@@ -174,7 +207,7 @@
                 id: "JFC-2500", cat: "stationary", name: "JFC 2500 Diesel", vol: "2500 L", dims: "220 × 180 × 202 cm",
                 images: ["img/jfc2500_1.png"],
                 advantages: ["Bardzo stabilny", "Wzmocniona struktura", "Bezpieczeństwo UDT"],
- base: ["Skrzynia dystrybucyjna z zamkiem", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Zawór kulowy odcinający", "Pompa 79 l/min", "Separator metalowy JFC", "Przepływomierz cyfrowy (dwufunkcyjny, kalibrowany)", "Wąż dystrybucyjny 8 m", "Automatyczny pistolet A60 JFC", "Bezprzewodowy wskaźnik poziomu + czujnik przecieku"],
+                base: ["Skrzynia dystrybucyjna z zamkiem", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Zawór kulowy odcinający", "Pompa 79 l/min", "Separator metalowy JFC", "Przepływomierz cyfrowy (dwufunkcyjny, kalibrowany)", "Wąż dystrybucyjny 8 m", "Automatyczny pistolet A60 JFC", "Bezprzewodowy wskaźnik poziomu + czujnik przecieku"],
                 extra: ["Zwijadła automatyczne (8–20 m)", "Oświetlenie LED szafy", "Filtry i separatory (w tym BIO)", "Pompy do 100 l/min", "Dolna linia DN50 ze SpillStop", "Bezprzewodowy wskaźnik poziomu + czujnik przecieku", "Przepływomierze PIUSI / MODI - JFC", "Pompy PIUSI / MODI - JFC", "System monitoringu SMDP / SR TIME / XTRACK"],
             },
             {
@@ -198,8 +231,6 @@
                base: ["Skrzynia dystrybucyjna z zamkiem", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Zawór kulowy odcinający", "Pompa 79 l/min", "Separator metalowy JFC", "Przepływomierz cyfrowy (dwufunkcyjny, kalibrowany)", "Wąż dystrybucyjny 8 m", "Automatyczny pistolet A60 JFC", "Bezprzewodowy wskaźnik poziomu + czujnik przecieku", "Czujnik przepełnienia GOK / GWD"],
                 extra: ["Zwijadła automatyczne (8–20 m)", "Oświetlenie LED szafy", "Filtry i separatory (w tym BIO)", "Pompy do 100 l/min", "Dolna linia DN50 ze SpillStop", "Bezprzewodowy wskaźnik poziomu + czujnik przecieku", "Przepływomierze PIUSI / MODI - JFC", "Pompy PIUSI / MODI - JFC", "System monitoringu SMDP / SR TIME / XTRACK"]
             },
-
-            // --- TRUCK TANK (MOBILNE) ---
             {
                 id: "TT-250", cat: "truck", name: "Truck Tank 250", vol: "250 L", dims: "120 × 80 × 57 cm",
                 images: ["img/tt250_1.png"],
@@ -228,8 +259,6 @@
                 base: ["Klapa z zamkiem", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pompa 40 l/min (12V DC)", "Kable z klemami 4 m", "Wąż dystrybucyjny 4 m", "Pistolet automatyczny"],
                 extra: ["Szekle transportowe", "Pompa 24/230 V", "Szeroka gama liczników", "Filtr liniowy", "Teleskopy podtrzymujące klapę"]
             },
-
-            // --- TRUCK TANK COMBI ---
             {
                 id: "TTC-200", cat: "combi", name: "Truck Tank COMBI 200", vol: "200L Diesel + 40L AdBlue", dims: "122 × 80 × 61 cm",
                 images: ["img/ttc200_1.png"],
@@ -241,7 +270,7 @@
                 id: "TTC-400", cat: "combi", name: "Truck Tank COMBI 400", vol: "400L Diesel + 40L AdBlue", dims: "122 × 80 × 81 cm",
                 images: ["img/ttc400_1.png"],
                 advantages: ["2 w 1 (ON + AdBlue)", "Zgodność z ADR", "Logistyka paliwowa"],
-               base: ["Klapa z zamkiem", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pompa membranowa 40 l/min (12V DC)", "Kable z klemami 4 m", "Wąż dystrybucyjny 4 m", "Pistolet automatyczny", "Teleskopy podtrzymujące klapę"],
+               base: ["Klapa z zamkiem", "Wąż ssący zfiltrem i zaworem przeciwzwrotnym", "Pompa membranowa 40 l/min (12V DC)", "Kable z klemami 4 m", "Wąż dystrybucyjny 4 m", "Pistolet automatyczny", "Teleskopy podtrzymujące klapę"],
                 extra: ["Szekle transportowe", "Pompa 50 l/min (12V DC)", "Szeroka gama liczników", "Pływakowy wskaźnik poziomu paliwa", "Filtr liniowy", "Automatyczny zwijak węża", "Dodatkowy zbiornik 35 L (AdBlue)"]
             },
               {
@@ -259,6 +288,53 @@
                 extra: ["Szekle transportowe", "Pompa 50 l/min (12V DC)", "Szeroka gama liczników", "Pływakowy wskaźnik poziomu paliwa", "Filtr liniowy", "Automatyczny zwijak węża", "Dodatkowy zbiornik 35 L (AdBlue)"]
             },
         ];
+
+        // --- ANIMACJA TŁA ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i<60; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5,
+                    color: i % 2 === 0 ? 'rgba(77, 187, 60, 0.15)' : 'rgba(255, 140, 0, 0.1)'
+                });
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if(p.x > canvas.width) p.x = 0;
+                if(p.x < 0) p.x = canvas.width;
+                if(p.y > canvas.height) p.y = 0;
+                if(p.y < 0) p.y = canvas.height;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        // --- OBSŁUGA PRODUKTÓW ---
+        function toggleDetails(btn) {
+            const content = btn.parentElement.querySelector('.details-content');
+            content.classList.toggle('open');
+            btn.classList.toggle('active');
+            btn.querySelector('span').innerText = content.classList.contains('open') ? 'Ukryj szczegóły' : 'Pokaż szczegóły techniczne';
+        }
 
         function renderProducts(category) {
             const grid = document.getElementById('product-grid');
@@ -289,23 +365,30 @@
                              </ul>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-grow mb-8">
-                            <div>
-                                <span class="text-xs text-white/70 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie</span>
-                                <ul class="text-sm text-gray-400 space-y-1 font-semibold">
-                                    ${p.base.map(f => `<li>• ${f}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div>
-                                <span class="text-xs text-[#ff8c00]/80 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Opcje</span>
-                                <ul class="text-sm text-gray-500 space-y-1 font-semibold">
-                                    ${p.extra.map(f => `<li>• ${f}</li>`).join('')}
-                                </ul>
+                        <button onclick="toggleDetails(this)" class="toggle-details-btn group flex items-center justify-between w-full mb-4 py-2 border-b border-white/10 text-xs font-black uppercase tracking-tighter hover:text-[#4dbb3c] transition-colors">
+                            <span>Pokaż szczegóły techniczne</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+
+                        <div class="details-content">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                                <div>
+                                    <span class="text-xs text-white/70 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie</span>
+                                    <ul class="text-[11px] text-gray-400 space-y-1 font-semibold leading-tight">
+                                        ${p.base.map(f => `<li>• ${f}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-[#ff8c00]/80 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Opcje</span>
+                                    <ul class="text-[11px] text-gray-500 space-y-1 font-semibold leading-tight">
+                                        ${p.extra.map(f => `<li>• ${f}</li>`).join('')}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
                         <button onclick="scrollToContact()" 
-                                class="w-full bg-[#3d4147] hover:bg-[#4dbb3c] hover:text-black py-5 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
+                                class="w-full bg-[#3d4147] mt-auto hover:bg-[#4dbb3c] hover:text-black py-5 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
                             ZAPYTAJ O TEN MODEL
                         </button>
                     </div>
@@ -323,7 +406,12 @@
             document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
         }
 
-        window.onload = () => renderProducts('stationary');
+        window.onload = () => {
+            initParticles();
+            animateParticles();
+            renderProducts('stationary');
+        };
+        window.onresize = initParticles;
     </script>
 </body>
 </html>
