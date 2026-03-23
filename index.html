@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* DYNAMICZNE TŁO - CZĄSTECZKI */
+        /* DYNAMICZNE TŁO - WYRAZISTE CZĄSTECZKI */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -82,6 +82,28 @@
             transition: all 0.2s; 
         }
         .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+        /* STYL PRZYCISKU WNĘTRZA */
+        .btn-inside {
+            background: transparent;
+            border: 1px solid var(--fs-green);
+            color: var(--fs-green);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: all 0.3s ease;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-inside:hover {
+            background: rgba(77, 187, 60, 0.1);
+            box-shadow: 0 0 15px rgba(77, 187, 60, 0.4);
+            transform: translateY(-2px);
+            color: #fff;
+        }
 
         /* ANIMACJA ROZWIJANIA */
         .details-content {
@@ -187,7 +209,7 @@
     </footer>
 
     <script>
-        // --- BAZA DANYCH (TREŚĆ NIERUSZONA) ---
+        // --- BAZA DANYCH ---
         const db = [
              {
                 id: "JFC-1300", cat: "stationary", name: "JFC 1300 Diesel", vol: "1300 L", dims: "165 × 120 × 180 cm",
@@ -282,7 +304,7 @@
             },
         ];
 
-        // --- ANIMACJA TŁA ---
+        // --- ANIMACJA TŁA (WYRAZISTE CZĄSTECZKI) ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -291,14 +313,14 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<60; i++) {
+            for(let i=0; i<150; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 1,
-                    speedX: (Math.random() - 0.5) * 0.5,
-                    speedY: (Math.random() - 0.5) * 0.5,
-                    color: i % 2 === 0 ? 'rgba(77, 187, 60, 0.15)' : 'rgba(255, 140, 0, 0.1)'
+                    size: Math.random() * 3 + 3,
+                    speedX: (Math.random() - 0.5) * 1.0,
+                    speedY: (Math.random() - 0.5) * 1.0,
+                    color: i % 2 === 0 ? 'rgba(77, 187, 60, 0.35)' : 'rgba(255, 140, 0, 0.3)'
                 });
             }
         }
@@ -380,10 +402,22 @@
                             </div>
                         </div>
 
-                        <button onclick="scrollToContact()" 
-                                class="w-full bg-[#3d4147] mt-auto hover:bg-[#4dbb3c] hover:text-black py-5 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
-                            ZAPYTAJ O TEN MODEL
-                        </button>
+                        <div class="flex flex-col gap-3 mt-auto">
+                            ${p.cat === 'stationary' ? `
+                                <a href="inside.html" class="btn-inside w-full py-3 text-[11px] uppercase cursor-pointer">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Zobacz konfiguracje wnętrza
+                                </a>
+                            ` : ''}
+
+                            <button onclick="scrollToContact()" 
+                                    class="w-full bg-[#3d4147] hover:bg-[#ff8c00] hover:text-black py-4 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
+                                ZAPYTAJ O TEN MODEL
+                            </button>
+                        </div>
                     </div>
                 `;
             });
