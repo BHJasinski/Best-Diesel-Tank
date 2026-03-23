@@ -304,7 +304,7 @@
             },
         ];
 
-        // --- ANIMACJA TŁA (WYRAZISTE CZĄSTECZKI) ---
+      // --- ANIMACJA TŁA (SUBTELNE CZĄSTECZKI - STYL INSIDE) ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -313,14 +313,18 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<150; i++) {
+            // Zmniejszono liczbę cząsteczek ze 150 na 100
+            for(let i=0; i<100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 3 + 3,
-                    speedX: (Math.random() - 0.5) * 1.0,
-                    speedY: (Math.random() - 0.5) * 1.0,
-                    color: i % 2 === 0 ? 'rgba(77, 187, 60, 0.35)' : 'rgba(255, 140, 0, 0.3)'
+                    // Zmniejszono rozmiar (teraz od 1 do 3 pikseli)
+                    size: Math.random() * 2 + 1,
+                    // Zmniejszono prędkość poruszania się
+                    speedX: (Math.random() - 0.5) * 0.8,
+                    speedY: (Math.random() - 0.5) * 0.8,
+                    // Zmniejszono widoczność (opacity) dla obu kolorów
+                    color: i % 2 === 0 ? 'rgba(77, 187, 60, 0.2)' : 'rgba(255, 140, 0, 0.15)'
                 });
             }
         }
@@ -342,7 +346,6 @@
             });
             requestAnimationFrame(animateParticles);
         }
-
         // --- OBSŁUGA PRODUKTÓW ---
         function toggleDetails(btn) {
             const content = btn.parentElement.querySelector('.details-content');
