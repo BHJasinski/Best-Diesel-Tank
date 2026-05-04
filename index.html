@@ -9,6 +9,7 @@
     <style>
         :root {
             --fs-green: #4dbb3c;
+            --fs-blue: #1e9bff;
             --fs-orange: #ff8c00;
             --fs-dark: #0f1113;
             --fs-panel: rgba(25, 28, 32, 0.75);
@@ -22,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* DYNAMICZNE TŁO - WYRAZISTE CZĄSTECZKI */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -33,7 +33,6 @@
             pointer-events: none;
         }
 
-        /* EFEKT SZKŁA (GLASSMORPHISM) */
         .glass-panel {
             background: var(--fs-panel);
             backdrop-filter: blur(16px);
@@ -42,7 +41,6 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
-        /* DYNAMICZNE LOGO */
         .logo-wrapper { 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             animation: logo-float 4s ease-in-out infinite;
@@ -83,7 +81,27 @@
         }
         .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
 
-        /* STYL PRZYCISKU WNĘTRZA */
+        .btn-adblue {
+            background: var(--fs-blue);
+            color: #000;
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            transition: all 0.25s ease;
+            box-shadow: 0 0 24px rgba(30, 155, 255, 0.32);
+        }
+        .btn-adblue:hover {
+            background: var(--fs-orange);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 0 30px rgba(30, 155, 255, 0.45);
+        }
+
+        .nav-adblue {
+            color: var(--fs-blue);
+            text-shadow: 0 0 12px rgba(30, 155, 255, 0.35);
+        }
+        .nav-adblue:hover {
+            color: #ffffff;
+        }
+
         .btn-inside {
             background: transparent;
             border: 1px solid var(--fs-green);
@@ -105,7 +123,6 @@
             color: #fff;
         }
 
-        /* ANIMACJA ROZWIJANIA */
         .details-content {
             max-height: 0;
             overflow: hidden;
@@ -136,6 +153,7 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="hidden lg:flex flex-1 space-x-8 font-bold uppercase tracking-widest text-sm">
                 <a href="#katalog" class="hover:text-[#4dbb3c] transition-colors">Oferta Zbiorników</a>
+                <a href="adblue.html" class="nav-adblue transition-colors">AdBlue</a>
                 <a href="#kontakt" class="hover:text-[#4dbb3c] transition-colors">Kontakt</a>
             </div>
 
@@ -166,6 +184,10 @@
         <p class="text-sm md:text-lg text-gray-200 uppercase tracking-[0.3em] font-bold mt-4 bg-black/40 inline-block px-4 py-1">
             Autoryzowany Dystrybutor JFC Polska
         </p>
+
+        <a href="adblue.html" class="btn-adblue inline-block mt-6 px-8 py-4 text-sm md:text-base font-black uppercase tracking-widest">
+            Zobacz zbiorniki AdBlue
+        </a>
     </div>
 </header>
 
@@ -308,7 +330,6 @@
             },
         ];
 
-      // --- ANIMACJA TŁA (SUBTELNE CZĄSTECZKI - STYL INSIDE) ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -317,17 +338,13 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            // Zmniejszono liczbę cząsteczek ze 150 na 100
             for(let i=0; i<100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    // Zmniejszono rozmiar (teraz od 1 do 3 pikseli)
                     size: Math.random() * 2 + 1,
-                    // Zmniejszono prędkość poruszania się
                     speedX: (Math.random() - 0.5) * 0.8,
                     speedY: (Math.random() - 0.5) * 0.8,
-                    // Zmniejszono widoczność (opacity) dla obu kolorów
                     color: i % 2 === 0 ? 'rgba(77, 187, 60, 0.2)' : 'rgba(255, 140, 0, 0.15)'
                 });
             }
@@ -350,7 +367,7 @@
             });
             requestAnimationFrame(animateParticles);
         }
-        // --- OBSŁUGA PRODUKTÓW ---
+
         function toggleDetails(btn) {
             const content = btn.parentElement.querySelector('.details-content');
             content.classList.toggle('open');
