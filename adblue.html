@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zbiorniki AdBlue | Best Diesel Tank | Certyfikowany Dealer JFC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fs-blue: #1e9bff;
+            --fs-orange: #ff8c00;
+            --fs-dark: #0f1113;
+            --fs-panel: rgba(25, 28, 32, 0.75);
+        }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--fs-dark);
+            color: #ffffff;
+            scroll-behavior: smooth;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .glass-panel {
+            background: var(--fs-panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        .logo-wrapper {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: logo-float 4s ease-in-out infinite;
+        }
+        .logo-bdt {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(30, 155, 255, 0.3));
+        }
+        @media (min-width: 768px) { .logo-bdt { height: 140px; } }
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 15px rgba(30, 155, 255, 0.3)); }
+            50% { transform: translateY(-5px) scale(1.02); filter: drop-shadow(0 0 25px rgba(30, 155, 255, 0.5)); }
+        }
+        .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
+        .fs-border:hover {
+            border-color: var(--fs-blue);
+            box-shadow: 0 0 30px rgba(30, 155, 255, 0.2);
+        }
+        .category-btn {
+            background: #2a2d31;
+            border: 1px solid #1e9bff;
+            transition: all 0.3s;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .category-btn.active { background: var(--fs-blue); color: black; box-shadow: 0 0 15px var(--fs-blue); }
+        .btn-action {
+            background-color: var(--fs-orange);
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            transition: all 0.2s;
+        }
+        .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .btn-inside {
+            background: transparent;
+            border: 1px solid var(--fs-blue);
+            color: var(--fs-blue);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: all 0.3s ease;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-inside:hover {
+            background: rgba(30, 155, 255, 0.1);
+            box-shadow: 0 0 15px rgba(30, 155, 255, 0.4);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+        .details-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-in;
+            opacity: 0;
+        }
+        .details-content.open {
+            max-height: 1400px;
+            opacity: 1;
+        }
+        .toggle-details-btn svg { transition: transform 0.3s ease; }
+        .toggle-details-btn.active svg { transform: rotate(180deg); }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .badge-adblue {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(30, 155, 255, 0.45);
+            background: rgba(30, 155, 255, 0.08);
+            color: #b9e4ff;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="sticky top-0 z-50 bg-[#0f1113]/90 backdrop-blur-xl border-b-2 border-[#1e9bff] px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="hidden lg:flex flex-1 space-x-8 font-bold uppercase tracking-widest text-sm">
+                <a href="#katalog" class="hover:text-[#1e9bff] transition-colors">Zbiorniki AdBlue</a>
+                <a href="#kontakt" class="hover:text-[#1e9bff] transition-colors">Kontakt</a>
+            </div>
+
+            <div class="logo-wrapper cursor-pointer flex-1 flex flex-col items-center" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <img src="logo%20BDT.png" alt="Best Diesel Tank" class="logo-bdt">
+                <span class="text-[#1e9bff] font-black uppercase tracking-[3px] text-xs italic mt-1">Certyfikowany Dealer JFC</span>
+            </div>
+
+            <div class="flex-1 flex justify-center md:justify-end items-center">
+                <div class="text-center md:text-right text-sm text-gray-300 uppercase font-semibold">
+                    <div class="text-[#ff8c00] font-black text-base">Eksperci BDT</div>
+                    <div class="tracking-tighter text-[10px] md:text-xs">Dostępni: Pon - Pt 8:00 - 21:00, Sob 10:00 - 18:00</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative min-h-[42vh] md:h-auto flex items-center justify-center overflow-hidden bg-black">
+        <div class="absolute inset-0 opacity-40 md:relative md:opacity-55 w-full">
+            <img src="img/targiBestDieselTank.jpeg" alt="Best Diesel Tank - zbiorniki AdBlue JFC" class="w-full h-full object-cover md:object-contain md:h-auto block">
+        </div>
+
+        <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
+            <span class="badge-adblue mb-5">AdBlue • JFC Polska • BDT</span>
+            <h1 class="text-4xl md:text-7xl font-black uppercase italic tracking-tighter leading-none text-white">
+                ZBIORNIKI <span class="text-[#1e9bff]">ADBLUE</span>
+            </h1>
+            <p class="text-sm md:text-lg text-gray-200 uppercase tracking-[0.3em] font-bold mt-4 bg-black/40 inline-block px-4 py-1">
+                Stacjonarne, mobilne i podziemne systemy magazynowania AdBlue
+            </p>
+        </div>
+    </header>
+
+    <section id="katalog" class="py-12 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-black uppercase italic tracking-tight mb-5">Katalog produktów AdBlue</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto uppercase tracking-widest text-sm font-bold mb-8">
+                Wymiary, pojemności oraz konfiguracja wyposażenia podstawowego i opcjonalnego dla zbiorników AdBlue JFC.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="changeCategory('adsn', this)" class="category-btn active px-8 py-4 uppercase text-sm">ADSN z szafą</button>
+                <button onclick="changeCategory('ad', this)" class="category-btn px-8 py-4 uppercase text-sm">Stacjonarne AD</button>
+                <button onclick="changeCategory('mobile', this)" class="category-btn px-8 py-4 uppercase text-sm">Mobilne TT</button>
+                <button onclick="changeCategory('combi', this)" class="category-btn px-8 py-4 uppercase text-sm">Mobilne TTC</button>
+                <button onclick="changeCategory('special', this)" class="category-btn px-8 py-4 uppercase text-sm">Specjalne / podziemne</button>
+            </div>
+        </div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+    </section>
+
+    <section id="kontakt" class="py-20 border-y border-gray-800">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="glass-panel p-10 fs-border relative rounded-xl">
+                <h2 class="text-4xl font-black uppercase italic text-[#ff8c00] mb-4">Kontakt z Ekspertem</h2>
+                <p class="text-gray-300 text-base uppercase tracking-widest font-bold mb-10">Dobierzemy zbiornik AdBlue do floty, gospodarstwa lub bazy transportowej</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="tel:+48509999979" class="btn-action flex flex-col items-center justify-center py-8 px-6 rounded-lg transition-all shadow-xl">
+                        <span class="text-black text-xs font-bold uppercase mb-2">Zadzwoń do nas</span>
+                        <span class="text-black text-3xl font-black tracking-tighter">+48 509 999 979</span>
+                    </a>
+
+                    <a href="mailto:bestdieseltank@o2.pl" class="bg-[#3d4147] hover:bg-[#1e9bff] flex flex-col items-center justify-center py-8 px-6 rounded-lg transition-all group shadow-xl">
+                        <span class="text-gray-300 group-hover:text-black text-xs font-bold uppercase mb-2">Napisz wiadomość</span>
+                        <span class="text-white group-hover:text-black text-2xl font-black tracking-tighter">bestdieseltank@o2.pl</span>
+                    </a>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-white/10">
+                    <p class="text-sm text-gray-400 uppercase tracking-widest leading-relaxed font-bold">
+                        Krzysztof Darczuk<br>
+                        <span class="text-[#1e9bff]">Specjalista ds. Systemów Magazynowania Paliw i AdBlue</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-gray-500 text-xs uppercase tracking-[0.4em] font-bold">
+        Best Diesel Tank &copy; 2026 | Wszelkie prawa zastrzeżone
+    </footer>
+
+    <script>
+        // --- BAZA PRODUKTÓW ADBLUE ---
+        // Uwaga: jeżeli producent nie podaje publicznie listy opcji dla danego modelu,
+        // w polu extra wpisano komunikat bez dopowiadania wyposażenia z domysłu.
+        const noPublicOptions = ["Producent nie publikuje osobnej listy wyposażenia opcjonalnego dla tego modelu. Konfiguracja dodatkowa ustalana jest indywidualnie przy zapytaniu ofertowym."];
+
+        const db = [
+            {
+                id: "JFC1300ADSN-SM", cat: "adsn", name: "JFC 1300 ADSN SM", vol: "1300 L", dims: "130 × 105 × 163 cm",
+                images: ["img/adblue/jfc1300adsn.png"],
+                advantages: ["Kompaktowa stacja AdBlue", "Mała szafa dystrybucyjna", "Gotowy układ do wydawania płynu"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC1300ADSN-LG", cat: "adsn", name: "JFC 1300 ADSN LG", vol: "1300 L", dims: "164 × 105 × 163 cm",
+                images: ["img/adblue/jfc1300adsn.png"],
+                advantages: ["Większa szafa dystrybucyjna", "Kompaktowa pojemność 1300 L", "Wygodny dostęp do osprzętu"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC1600ADSN-SM", cat: "adsn", name: "JFC 1600 ADSN SM", vol: "1600 L", dims: "130 × 105 × 198 cm",
+                images: ["img/adblue/jfc1600adsn.png"],
+                advantages: ["Większa pojemność przy małej podstawie", "Mała szafa dystrybucyjna", "Do codziennego tankowania AdBlue"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC1600ADSN-LG", cat: "adsn", name: "JFC 1600 ADSN LG", vol: "1600 L", dims: "164 × 105 × 198 cm",
+                images: ["img/adblue/jfc1600adsn.png"],
+                advantages: ["Większa szafa dystrybucyjna", "Pojemność 1600 L", "Stacja gotowa do dystrybucji"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC2500ADSN-SM", cat: "adsn", name: "JFC 2500 ADSN SM", vol: "2500 L", dims: "180 × 154 × 186 cm",
+                images: ["img/adblue/jfc2500adsn.png"],
+                advantages: ["Popularna pojemność flotowa", "Mała szafa dystrybucyjna", "Stabilny zbiornik stacjonarny"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC2500ADSN-LG", cat: "adsn", name: "JFC 2500 ADSN LG", vol: "2500 L", dims: "215 × 154 × 186 cm",
+                images: ["img/adblue/jfc2500adsn.png"],
+                advantages: ["Duża szafa dystrybucyjna", "Wygodne miejsce na osprzęt", "Pojemność dla intensywnej eksploatacji"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC4000ADSNSL", cat: "adsn", name: "JFC 4000 ADSN SL", vol: "4000 L", dims: "Wymiary do potwierdzenia u producenta",
+                images: ["img/adblue/jfc4000adsnsl.png"],
+                advantages: ["Wersja stacjonarna AdBlue", "Pojemność pośrednia 4000 L", "System dystrybucyjny w zabudowie"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC5000ADSN-SM", cat: "adsn", name: "JFC 5000 ADSN SM", vol: "5000 L", dims: "247 × 215 × 186 cm",
+                images: ["img/adblue/jfc5000adsn.png"],
+                advantages: ["Duża pojemność magazynowa", "Mała szafa dystrybucyjna", "Dla flot i gospodarstw"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC5000ADSN-LG", cat: "adsn", name: "JFC 5000 ADSN LG", vol: "5000 L", dims: "272 × 214 × 186 cm",
+                images: ["img/adblue/jfc5000adsn.png"],
+                advantages: ["Duża szafa dystrybucyjna", "Pojemność 5000 L", "Komfortowa obsługa osprzętu"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC9000ADSN-LG", cat: "adsn", name: "JFC 9000 ADSN LG", vol: "9000 L", dims: "310 × 240 × 230 cm",
+                images: ["img/adblue/jfc9000adsn.png"],
+                advantages: ["Największa stacja AdBlue w serii", "Dla dużych flot", "Duża szafa dystrybucyjna"],
+                base: ["Skrzynia dystrybucyjna zamykana na klucz", "Wlew w płaszczu wewnętrznym z odpowietrzeniem", "Pompa AdBlue 230 V, zatapialna lub membranowa", "Przepływomierz cyfrowy z możliwością kalibracji", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet automatyczny do AdBlue"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC1300AD", cat: "ad", name: "JFC 1300 AD", vol: "1300 L", dims: "181 × 120 × 180 cm",
+                images: ["img/adblue/jfc1300ad.png"],
+                advantages: ["Stacjonarny zbiornik AdBlue", "Kompaktowa pojemność", "Zabudowany układ dystrybucji"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC1600AD", cat: "ad", name: "JFC 1600 AD", vol: "1600 L", dims: "181 × 120 × 210 cm",
+                images: ["img/adblue/jfc1600ad.png"],
+                advantages: ["Pojemność 1600 L", "Stacjonarna dystrybucja AdBlue", "Prosta obsługa tankowania"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC2500AD", cat: "ad", name: "JFC 2500 AD", vol: "2500 L", dims: "238 × 180 × 200 cm",
+                images: ["img/adblue/jfc2500ad.png"],
+                advantages: ["Pojemność do regularnej pracy", "Stacjonarna konstrukcja", "Kompletny osprzęt dystrybucyjny"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC2500ADSL", cat: "ad", name: "JFC 2500 AD SL", vol: "2500 L", dims: "295 × 100 × 203 cm",
+                images: ["img/adblue/jfc2500adsl.png"],
+                advantages: ["Smukła forma zbiornika", "Dobra organizacja miejsca", "Pojemność 2500 L"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC2500DUOAD", cat: "ad", name: "JFC 2500 DUO AD", vol: "2500 L", dims: "238 × 180 × 200 cm",
+                images: ["img/adblue/jfc2500duoad.png"],
+                advantages: ["Wersja DUO", "Pojemność 2500 L", "Układ dla wymagającej eksploatacji"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC5000AD", cat: "ad", name: "JFC 5000 AD", vol: "5000 L", dims: "295 × 238 × 204 cm",
+                images: ["img/adblue/jfc5000ad.png"],
+                advantages: ["Duży zbiornik stacjonarny", "Do baz i flot", "Kompletna dystrybucja AdBlue"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC5000ADDUO", cat: "ad", name: "JFC 5000 AD DUO", vol: "5000 L", dims: "295 × 238 × 204 cm",
+                images: ["img/adblue/jfc5000adduo.png"],
+                advantages: ["Wersja DUO o dużej pojemności", "Dla intensywnej eksploatacji", "Stacjonarna baza AdBlue"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "JFC9000AD", cat: "ad", name: "JFC 9000 AD", vol: "9000 L", dims: "325,5 × 251,5 × 260 cm",
+                images: ["img/adblue/jfc9000ad.png"],
+                advantages: ["Największa pojemność w serii AD", "Do dużych flot", "Magazynowanie AdBlue w skali przemysłowej"],
+                base: ["Skrzynia zamykana na klucz", "Pompa AdBlue", "Wąż dystrybucyjny ¾”, długość 6 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Zamykany wlew z odpowietrzeniem", "Pistolet automatyczny", "Przepływomierz cyfrowy"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TT250AD", cat: "mobile", name: "TT 250 AD", vol: "250 L", dims: "120 × 80 × 57 cm",
+                images: ["img/adblue/tt250ad.png"],
+                advantages: ["Mobilny transport AdBlue", "Kompaktowe gabaryty", "Zasilanie 12 V DC"],
+                base: ["Klapa zamykana na zamek", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TT425AD", cat: "mobile", name: "TT 425 AD", vol: "425 L", dims: "120 × 80 × 77 cm",
+                images: ["img/adblue/tt425ad.png"],
+                advantages: ["Większa pojemność mobilna", "Do pracy serwisowej w terenie", "Zabudowana pompa i osprzęt"],
+                base: ["Klapa zamykana na zamek", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TT600AD", cat: "mobile", name: "TT 600 AD", vol: "600 L", dims: "120 × 80 × 97 cm",
+                images: ["img/adblue/tt600ad.png"],
+                advantages: ["Mobilny zbiornik 600 L", "Do maszyn i floty terenowej", "Gotowy zestaw dystrybucyjny"],
+                base: ["Klapa zamykana na zamek", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TT950AD", cat: "mobile", name: "TT 950 AD", vol: "950 L", dims: "120 × 100 × 121 cm",
+                images: ["img/adblue/tt950ad.png"],
+                advantages: ["Największy mobilny TT AdBlue", "Wysoka autonomia w terenie", "Zestaw do intensywnej pracy"],
+                base: ["Klapa zamykana na zamek", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TTC200AD", cat: "combi", name: "TTC 200 AD", vol: "200 L", dims: "122 × 80 × 61 cm",
+                images: ["img/adblue/ttc200ad.png"],
+                advantages: ["Mobilna konstrukcja COMBI", "Kompaktowy zestaw AdBlue", "Zabudowany osprzęt tankowania"],
+                base: ["Klapa zamykana na zamek", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TTC400AD", cat: "combi", name: "TTC 400 AD", vol: "400 L", dims: "122 × 80 × 81 cm",
+                images: ["img/adblue/ttc400ad.png"],
+                advantages: ["Mobilna pojemność 400 L", "Do obsługi maszyn w terenie", "Prosty transport i tankowanie"],
+                base: ["Klapa zamykana na zamek", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TTC600AD", cat: "combi", name: "TTC 600 AD", vol: "600 L", dims: "122 × 80 × 97 cm",
+                images: ["img/adblue/ttc600ad.png"],
+                advantages: ["Mobilny zbiornik 600 L", "Dobry zasięg serwisowy", "Zamykana zabudowa osprzętu"],
+                base: ["Klapa zamykana na zamek", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "TTC900AD", cat: "combi", name: "TTC 900 AD", vol: "900 L", dims: "122 × 120 × 123 cm",
+                images: ["img/adblue/ttc900ad.png"],
+                advantages: ["Największy model TTC AdBlue", "Duża pojemność mobilna", "Do flot i pracy terenowej"],
+                base: ["Klapa zamykana na zamek", "Pompa membranowa 40 l/min, 12 V DC", "Kable z klemami, długość 4 m", "Wąż dystrybucyjny, długość 4 m", "Wąż ssący z filtrem i zaworem przeciwzwrotnym", "Pistolet automatyczny"],
+                extra: noPublicOptions
+            },
+            {
+                id: "ADAST", cat: "special", name: "JFC AdBlue ADAST", vol: "1300-5000 L", dims: "Wymiary zależne od wybranej pojemności",
+                images: ["img/adblue/adast.png"],
+                advantages: ["Wersja z panelem ADAST", "Rozbudowane ogrzewanie i izolacja", "Do profesjonalnych instalacji AdBlue"],
+                base: ["Pompa AdBlue 230 V", "Wąż dystrybucyjny ¾”, długość 6 m", "Pistolet JFC", "Przepływomierz", "Panel legalizowany ADAST", "Izolacja termiczna", "Taśma grzewcza", "Dolna linia napełniająca ze stali nierdzewnej z szybkozłączem DDC", "Przyłącze DDC", "Wentylatory wyciągowe", "Ogrzewanie nadmuchowe skrzyni", "Skrzynka sterująca", "Zabezpieczenie przed przepełnieniem GOK BC2"],
+                extra: noPublicOptions
+            },
+            {
+                id: "ADBLUE-UG", cat: "special", name: "ADBLUE-UG", vol: "2275-4800 L", dims: "Wymiary do potwierdzenia według wybranej konfiguracji",
+                images: ["img/adblue/adblue-ug.png"],
+                advantages: ["Podziemne magazynowanie AdBlue", "Konstrukcja z HDPE", "Przyłącza projektowane pod klienta"],
+                base: ["Podziemny zbiornik z HDPE do magazynowania AdBlue", "Materiał odporny na korozję", "Przyłącza projektowane według wytycznych klienta"],
+                extra: ["Indywidualna konfiguracja przyłączy", "Dobór systemu napełniania i dystrybucji według projektu", "Dobór osprzętu pomiarowego po konsultacji technicznej"]
+            }
+        ];
+
+        // --- ANIMACJA TŁA ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1,
+                    speedX: (Math.random() - 0.5) * 0.8,
+                    speedY: (Math.random() - 0.5) * 0.8,
+                    color: i % 2 === 0 ? 'rgba(30, 155, 255, 0.2)' : 'rgba(255, 140, 0, 0.15)'
+                });
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if(p.x > canvas.width) p.x = 0;
+                if(p.x < 0) p.x = canvas.width;
+                if(p.y > canvas.height) p.y = 0;
+                if(p.y < 0) p.y = canvas.height;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        function toggleDetails(btn) {
+            const content = btn.parentElement.querySelector('.details-content');
+            content.classList.toggle('open');
+            btn.classList.toggle('active');
+            btn.querySelector('span').innerText = content.classList.contains('open') ? 'Ukryj szczegóły' : 'Pokaż szczegóły techniczne';
+        }
+
+        function renderProducts(category) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            const filtered = db.filter(item => item.cat === category);
+
+            filtered.forEach((p) => {
+                grid.innerHTML += `
+                    <div class="glass-panel fs-border p-8 animate-fade-in flex flex-col h-full relative overflow-hidden rounded-2xl">
+                        <div class="absolute top-4 right-4 badge-adblue">AdBlue</div>
+
+                        <div class="h-64 flex items-center justify-center mb-8 bg-white/5 rounded-xl p-4">
+                            <img src="${p.images[0]}" alt="${p.name}" class="max-h-full max-w-full object-contain hover:scale-110 transition-transform duration-500" onerror="this.src='img/adblue/placeholder-adblue.png'; this.alt='Zdjęcie produktu w przygotowaniu';">
+                        </div>
+
+                        <h3 class="text-2xl font-black uppercase italic border-l-4 border-[#1e9bff] pl-4 mb-4 leading-tight text-[#1e9bff]">${p.name}</h3>
+
+                        <div class="flex flex-col gap-1 text-sm text-gray-300 uppercase font-bold mb-6 bg-black/40 p-3 rounded">
+                            <span class="flex justify-between gap-4"><span>Wymiary:</span> <span class="text-white font-black text-right">${p.dims}</span></span>
+                            <span class="flex justify-between gap-4"><span>Pojemność:</span> <span class="text-[#1e9bff] font-black text-right">${p.vol}</span></span>
+                        </div>
+
+                        <div class="mb-6">
+                             <div class="text-xs uppercase text-[#1e9bff] font-black mb-3 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z"></path></svg>
+                                Główne atuty:
+                             </div>
+                             <ul class="text-sm text-gray-200 italic space-y-1">
+                                ${p.advantages.map(a => `<li class="flex items-center"><span class="w-2 h-2 bg-[#1e9bff] mr-2 rounded-full shrink-0"></span>${a}</li>`).join('')}
+                             </ul>
+                        </div>
+
+                        <button onclick="toggleDetails(this)" class="toggle-details-btn group flex items-center justify-between w-full mb-4 py-2 border-b border-white/10 text-xs font-black uppercase tracking-tighter hover:text-[#1e9bff] transition-colors">
+                            <span>Pokaż szczegóły techniczne</span>
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+
+                        <div class="details-content">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                                <div>
+                                    <span class="text-xs text-white/70 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie podstawowe</span>
+                                    <ul class="text-[11px] text-gray-400 space-y-1 font-semibold leading-tight">
+                                        ${p.base.map(f => `<li>• ${f}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-[#ff8c00]/80 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie opcjonalne</span>
+                                    <ul class="text-[11px] text-gray-500 space-y-1 font-semibold leading-tight">
+                                        ${p.extra.map(f => `<li>• ${f}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3 mt-auto">
+                            <a href="#kontakt" onclick="setProductInMessage('${p.name.replace(/'/g, "\\'")}')" class="btn-inside w-full py-3 text-[11px] uppercase cursor-pointer">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                </svg>
+                                Zapytaj o konfigurację
+                            </a>
+
+                            <button onclick="scrollToContact('${p.name.replace(/'/g, "\\'")}')"
+                                    class="w-full bg-[#3d4147] hover:bg-[#ff8c00] hover:text-black py-4 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
+                                ZAPYTAJ O TEN MODEL
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function changeCategory(cat, btn) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(cat);
+        }
+
+        function setProductInMessage(productName) {
+            const subject = encodeURIComponent('Zapytanie o zbiornik AdBlue ' + productName);
+            const body = encodeURIComponent('Dzień dobry,\n\nProszę o ofertę i potwierdzenie konfiguracji dla modelu: ' + productName + '.\n\nPozdrawiam');
+            const mailLink = document.querySelector('a[href^="mailto:"]');
+            if (mailLink) {
+                mailLink.href = 'mailto:bestdieseltank@o2.pl?subject=' + subject + '&body=' + body;
+            }
+        }
+
+        function scrollToContact(productName = '') {
+            if (productName) setProductInMessage(productName);
+            document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onload = () => {
+            initParticles();
+            animateParticles();
+            renderProducts('adsn');
+        };
+        window.onresize = initParticles;
+    </script>
+</body>
+</html>
