@@ -8,209 +8,349 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --fs-blue: #1e9bff;
-            --fs-orange: #ff8c00;
-            --fs-dark: #0f1113;
-            --fs-panel: rgba(25, 28, 32, 0.75);
+            --brand-main: #1e9bff;
+            --brand-second: #4dbb3c;
+            --brand-orange: #ff8c00;
+            --brand-dark: #0f1113;
+            --brand-panel: rgba(25, 28, 32, 0.78);
         }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 92px; }
         body {
             font-family: 'Rajdhani', sans-serif;
-            background-color: var(--fs-dark);
-            color: #ffffff;
-            scroll-behavior: smooth;
+            background: var(--brand-dark);
+            color: #fff;
             margin: 0;
             overflow-x: hidden;
         }
         #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
             pointer-events: none;
         }
+        .site-shell { max-width: 1280px; margin: 0 auto; }
         .glass-panel {
-            background: var(--fs-panel);
+            background: var(--brand-panel);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,.5);
         }
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15,17,19,.94);
+            border-bottom: 2px solid var(--brand-main);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .nav-inner {
+            min-height: 78px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+            padding: 10px 18px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 18px; }
+        .nav-links a, .mobile-nav a, .category-anchor {
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+        .nav-links a { color: #e8edf2; font-size: 14px; }
+        .nav-links a:hover { color: var(--brand-main); }
         .logo-wrapper {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: logo-float 4s ease-in-out infinite;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
         }
         .logo-bdt {
-            height: 100px;
+            height: 78px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(30, 155, 255, 0.3));
+            filter: drop-shadow(0 0 15px color-mix(in srgb, var(--brand-main) 45%, transparent));
         }
-        @media (min-width: 768px) { .logo-bdt { height: 140px; } }
-        @keyframes logo-float {
-            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 15px rgba(30, 155, 255, 0.3)); }
-            50% { transform: translateY(-5px) scale(1.02); filter: drop-shadow(0 0 25px rgba(30, 155, 255, 0.5)); }
+        .dealer-tag {
+            color: var(--brand-main);
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-style: italic;
+            margin-top: 4px;
+            white-space: nowrap;
         }
-        .fs-border { border: 2px solid #3d4147; transition: all 0.3s ease; }
-        .fs-border:hover {
-            border-color: var(--fs-blue);
-            box-shadow: 0 0 30px rgba(30, 155, 255, 0.2);
+        .expert-box { text-align: right; text-transform: uppercase; color: #cbd5e1; font-weight: 700; }
+        .expert-box strong { color: var(--brand-orange); display: block; font-size: 16px; font-weight: 900; }
+        .expert-box span { font-size: 11px; letter-spacing: -.02em; }
+        .mobile-nav {
+            display: none;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 0 14px 12px;
+            scrollbar-width: none;
         }
-        .category-btn {
-            background: #2a2d31;
-            border: 1px solid #1e9bff;
-            transition: all 0.3s;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            font-weight: 700;
-            letter-spacing: 1px;
+        .mobile-nav::-webkit-scrollbar, .category-scroller::-webkit-scrollbar { display: none; }
+        .mobile-nav a {
+            flex: 0 0 auto;
+            color: #fff;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font-size: 12px;
         }
-        .category-btn.active { background: var(--fs-blue); color: black; box-shadow: 0 0 15px var(--fs-blue); }
-        .btn-action {
-            background-color: var(--fs-orange);
-            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
-            transition: all 0.2s;
-        }
-        .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
-        .btn-inside {
-            background: transparent;
-            border: 1px solid var(--fs-blue);
-            color: var(--fs-blue);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            transition: all 0.3s ease;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .mobile-nav a.active, .nav-links a.active { color: var(--brand-main); }
+        .hero {
+            position: relative;
+            min-height: clamp(420px, 58vh, 620px);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-        .btn-inside:hover {
-            background: rgba(30, 155, 255, 0.1);
-            box-shadow: 0 0 15px rgba(30, 155, 255, 0.4);
-            transform: translateY(-2px);
-            color: #fff;
-        }
-        .details-content {
-            max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out, opacity 0.3s ease-in;
-            opacity: 0;
+            background: #000;
         }
-        .details-content.open {
-            max-height: 1400px;
-            opacity: 1;
-        }
-        .toggle-details-btn svg { transition: transform 0.3s ease; }
-        .toggle-details-btn.active svg { transform: rotate(180deg); }
-        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .badge-adblue {
+        .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .42; }
+        .hero:after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 0, rgba(0,0,0,.68) 70%); }
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 18px; max-width: 980px; }
+        .eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(30, 155, 255, 0.45);
-            background: rgba(30, 155, 255, 0.08);
-            color: #b9e4ff;
-            padding: 4px 10px;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid color-mix(in srgb, var(--brand-main) 50%, transparent);
+            background: color-mix(in srgb, var(--brand-main) 12%, transparent);
+            color: #dcefff;
             border-radius: 999px;
-            font-size: 11px;
+            padding: 6px 12px;
+            font-size: 12px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: .12em;
             text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        .hero h1 { font-size: clamp(38px, 7vw, 92px); font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -.04em; line-height: .9; }
+        .hero h1 span { color: var(--brand-main); }
+        .hero p { margin: 18px auto 0; color: #e5e7eb; text-transform: uppercase; letter-spacing: .22em; font-weight: 800; font-size: clamp(12px, 2vw, 18px); background: rgba(0,0,0,.42); display: inline-block; padding: 8px 14px; }
+        .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+        .btn-primary, .btn-secondary, .btn-inside, .btn-ask, .category-anchor {
+            clip-path: polygon(7% 0, 100% 0, 93% 100%, 0% 100%);
+        }
+        .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 24px;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: .09em;
+            text-decoration: none;
+            transition: .2s ease;
+        }
+        .btn-primary { color: #050505; background: var(--brand-main); box-shadow: 0 0 24px color-mix(in srgb, var(--brand-main) 35%, transparent); }
+        .btn-secondary { color: #fff; background: #2f343a; border: 1px solid rgba(255,255,255,.13); }
+        .btn-primary:hover, .btn-secondary:hover { transform: translateY(-2px); filter: brightness(1.12); }
+        .intro-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: -44px auto 40px; position: relative; z-index: 4; padding: 0 18px; }
+        .intro-card { border-radius: 18px; padding: 24px; border: 1px solid rgba(255,255,255,.1); background: rgba(18,22,26,.92); min-height: 150px; }
+        .intro-card h2 { font-size: 28px; line-height: 1; font-style: italic; text-transform: uppercase; font-weight: 900; color: var(--brand-main); }
+        .intro-card p { margin-top: 10px; color: #cbd5e1; text-transform: uppercase; font-weight: 700; letter-spacing: .08em; font-size: 13px; }
+        .section-heading { text-align: center; padding: 64px 18px 26px; }
+        .section-heading h2 { font-size: clamp(32px, 5vw, 56px); font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -.03em; }
+        .section-heading p { max-width: 780px; margin: 14px auto 0; color: #aeb8c5; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; font-size: 13px; }
+        .category-scroller {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 0 18px 22px;
+            justify-content: center;
+            scrollbar-width: none;
+        }
+        .category-anchor {
+            flex: 0 0 auto;
+            border: 1px solid var(--brand-main);
+            color: #fff;
+            background: #2a2d31;
+            padding: 13px 20px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .category-anchor:hover { color: #050505; background: var(--brand-main); box-shadow: 0 0 18px color-mix(in srgb, var(--brand-main) 40%, transparent); }
+        .product-section { padding: 26px 18px 54px; border-top: 1px solid rgba(255,255,255,.06); }
+        .group-title { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+        .group-title h3 { color: var(--brand-main); font-size: clamp(26px, 4vw, 40px); font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -.02em; }
+        .group-title span { color: #9ca3af; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+        .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            border-radius: 18px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #3d4147;
+            transition: .25s ease;
+        }
+        .product-card:hover { border-color: var(--brand-main); box-shadow: 0 0 30px color-mix(in srgb, var(--brand-main) 20%, transparent); }
+        .product-badge { position: absolute; top: 14px; right: 14px; border: 1px solid color-mix(in srgb, var(--brand-main) 50%, transparent); color: #dcefff; background: color-mix(in srgb, var(--brand-main) 9%, transparent); padding: 4px 10px; border-radius: 999px; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
+        .image-box { height: 210px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; background: rgba(255,255,255,.05); border-radius: 14px; padding: 14px; }
+        .image-box img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform .35s ease; }
+        .product-card:hover .image-box img { transform: scale(1.06); }
+        .product-card h4 { font-size: 24px; line-height: 1.05; font-weight: 900; text-transform: uppercase; font-style: italic; color: var(--brand-main); border-left: 4px solid var(--brand-main); padding-left: 12px; margin-bottom: 16px; }
+        .facts { background: rgba(0,0,0,.38); border-radius: 10px; padding: 12px; margin-bottom: 18px; font-size: 13px; font-weight: 800; text-transform: uppercase; color: #cbd5e1; }
+        .facts span { display: flex; justify-content: space-between; gap: 10px; }
+        .facts strong { color: #fff; text-align: right; }
+        .facts span + span { margin-top: 6px; }
+        .facts .capacity { color: var(--brand-main); }
+        .advantages-title { color: var(--brand-main); font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+        .advantages { color: #e5e7eb; font-size: 14px; font-style: italic; line-height: 1.35; margin-bottom: 18px; }
+        .advantages li { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 5px; }
+        .advantages li:before { content: ''; width: 7px; height: 7px; margin-top: 6px; border-radius: 50%; background: var(--brand-main); flex: 0 0 auto; }
+        .toggle-details-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,.12); color: #fff; padding: 10px 0; font-size: 12px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+        .toggle-details-btn:hover { color: var(--brand-main); }
+        .toggle-details-btn svg { width: 16px; transition: .25s ease; }
+        .toggle-details-btn.active svg { transform: rotate(180deg); }
+        .details-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height .45s ease, opacity .25s ease; }
+        .details-content.open { max-height: 1500px; opacity: 1; }
+        .details-grid { display: grid; gap: 16px; padding: 18px 0; }
+        .details-grid b { display: block; color: var(--brand-orange); border-bottom: 1px solid rgba(255,255,255,.12); padding-bottom: 6px; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+        .details-grid ul { color: #aab4c0; font-size: 12px; font-weight: 700; line-height: 1.3; }
+        .details-grid li { margin-bottom: 5px; }
+        .card-actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 8px; }
+        .btn-inside, .btn-ask { width: 100%; min-height: 44px; display: flex; align-items: center; justify-content: center; text-align: center; gap: 8px; text-decoration: none; text-transform: uppercase; font-size: 12px; font-weight: 900; letter-spacing: .08em; border: 0; cursor: pointer; transition: .2s ease; }
+        .btn-inside { background: transparent; border: 1px solid var(--brand-main); color: var(--brand-main); }
+        .btn-inside:hover { background: color-mix(in srgb, var(--brand-main) 13%, transparent); color: #fff; }
+        .btn-ask { background: #3d4147; color: #fff; border-radius: 9px; clip-path: none; }
+        .btn-ask:hover { background: var(--brand-orange); color: #050505; }
+        .contact-section { padding: 70px 18px; border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); }
+        .contact-card { max-width: 820px; margin: 0 auto; text-align: center; border-radius: 18px; padding: 36px; border: 2px solid #3d4147; }
+        .contact-card h2 { color: var(--brand-orange); font-size: clamp(30px, 4vw, 42px); font-weight: 900; text-transform: uppercase; font-style: italic; }
+        .contact-card p { color: #cbd5e1; text-transform: uppercase; font-weight: 800; letter-spacing: .12em; margin-top: 8px; }
+        .contact-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+        .contact-actions a { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 96px; text-decoration: none; border-radius: 12px; font-weight: 900; transition: .2s ease; }
+        .phone-link { background: var(--brand-orange); color: #050505; clip-path: polygon(7% 0, 100% 0, 93% 100%, 0% 100%); }
+        .mail-link { background: #3d4147; color: #fff; }
+        .mail-link:hover { background: var(--brand-main); color: #050505; }
+        footer { padding: 44px 18px; text-align: center; color: #6b7280; font-size: 11px; text-transform: uppercase; letter-spacing: .35em; font-weight: 900; }
+        @media (max-width: 1024px) {
+            .nav-inner { grid-template-columns: 1fr auto; }
+            .nav-links { display: none; }
+            .mobile-nav { display: flex; }
+            .expert-box { text-align: right; }
+            .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .category-scroller { justify-content: flex-start; }
+        }
+        @media (max-width: 700px) {
+            html { scroll-padding-top: 128px; }
+            .nav-inner { grid-template-columns: 1fr; min-height: auto; gap: 8px; padding: 8px 12px 6px; }
+            .logo-bdt { height: 62px; }
+            .dealer-tag { font-size: 9px; letter-spacing: 2px; }
+            .expert-box { text-align: center; }
+            .expert-box strong { font-size: 13px; }
+            .expert-box span { font-size: 10px; }
+            .hero { min-height: 460px; }
+            .hero p { letter-spacing: .12em; }
+            .hero-actions { flex-direction: column; align-items: stretch; }
+            .intro-grid, .product-grid, .contact-actions { grid-template-columns: 1fr; }
+            .intro-grid { margin-top: 20px; }
+            .section-heading { padding-top: 38px; }
+            .product-section { padding-left: 12px; padding-right: 12px; }
+            .product-card { padding: 18px; }
+            .image-box { height: 180px; }
+            .group-title { align-items: flex-start; flex-direction: column; }
+            .contact-card { padding: 24px 18px; }
+            footer { letter-spacing: .18em; line-height: 1.8; }
         }
     </style>
 </head>
 <body>
-
     <canvas id="bg-canvas"></canvas>
 
-    <nav class="sticky top-0 z-50 bg-[#0f1113]/90 backdrop-blur-xl border-b-2 border-[#1e9bff] px-4 py-3">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="hidden lg:flex flex-1 space-x-8 font-bold uppercase tracking-widest text-sm">
-                <a href="#katalog" class="hover:text-[#1e9bff] transition-colors">Zbiorniki AdBlue</a>
-                <a href="#kontakt" class="hover:text-[#1e9bff] transition-colors">Kontakt</a>
+    <nav class="main-nav">
+        <div class="nav-inner site-shell">
+            <div class="nav-links">
+                <a href="index.html" class="">Paliwo</a>
+                <a href="adblue.html" class="active">AdBlue</a>
+                <a href="#kontakt">Kontakt</a>
             </div>
-
-            <div class="logo-wrapper cursor-pointer flex-1 flex flex-col items-center" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <div class="logo-wrapper" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <img src="logo%20BDT.png" alt="Best Diesel Tank" class="logo-bdt">
-                <span class="text-[#1e9bff] font-black uppercase tracking-[3px] text-xs italic mt-1">Certyfikowany Dealer JFC</span>
+                <span class="dealer-tag">Certyfikowany Dealer JFC</span>
             </div>
-
-            <div class="flex-1 flex justify-center md:justify-end items-center">
-                <div class="text-center md:text-right text-sm text-gray-300 uppercase font-semibold">
-                    <div class="text-[#ff8c00] font-black text-base">Eksperci BDT</div>
-                    <div class="tracking-tighter text-[10px] md:text-xs">Dostępni: Pon - Pt 8:00 - 21:00, Sob 10:00 - 18:00</div>
-                </div>
+            <div class="expert-box">
+                <strong>Eksperci BDT</strong>
+                <span>Dostępni: Pon - Pt 8:00 - 21:00, Sob 10:00 - 18:00</span>
             </div>
+        </div>
+        <div class="mobile-nav">
+            <a href="index.html" class="">Paliwo</a>
+            <a href="adblue.html" class="active">AdBlue</a>
+            <a href="#katalog">Katalog</a>
+            <a href="#kontakt">Kontakt</a>
         </div>
     </nav>
 
-    <header class="relative min-h-[42vh] md:h-auto flex items-center justify-center overflow-hidden bg-black">
-        <div class="absolute inset-0 opacity-40 md:relative md:opacity-55 w-full">
-            <img src="img/targiBestDieselTank.jpeg" alt="Best Diesel Tank - zbiorniki AdBlue JFC" class="w-full h-full object-cover md:object-contain md:h-auto block">
-        </div>
-
-        <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
-            <span class="badge-adblue mb-5">AdBlue • JFC Polska • BDT</span>
-            <h1 class="text-4xl md:text-7xl font-black uppercase italic tracking-tighter leading-none text-white">
-                ZBIORNIKI <span class="text-[#1e9bff]">ADBLUE</span>
-            </h1>
-            <p class="text-sm md:text-lg text-gray-200 uppercase tracking-[0.3em] font-bold mt-4 bg-black/40 inline-block px-4 py-1">
-                Stacjonarne, mobilne i podziemne systemy magazynowania AdBlue
-            </p>
+    <header class="hero">
+        <img src="img/targiBestDieselTank.jpeg" alt="Best Diesel Tank - certyfikowany dealer JFC">
+        <div class="hero-content">
+            <span class="eyebrow">AdBlue • JFC Polska • BDT</span>
+            <h1>Zbiorniki <span>AdBlue</span></h1>
+            <p>Stacjonarne, mobilne i podziemne systemy magazynowania AdBlue</p>
+            <div class="hero-actions"><a href="#katalog" class="btn-primary">Zobacz zbiorniki AdBlue</a><a href="index.html" class="btn-secondary">Wróć do paliwa</a></div>
         </div>
     </header>
 
-    <section id="katalog" class="py-12 px-4 max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-5xl font-black uppercase italic tracking-tight mb-5">Katalog produktów AdBlue</h2>
-            <p class="text-gray-400 max-w-3xl mx-auto uppercase tracking-widest text-sm font-bold mb-8">
-                Wymiary, pojemności oraz konfiguracja wyposażenia podstawowego i opcjonalnego dla zbiorników AdBlue JFC.
+    <div class="intro-grid site-shell">
+            <a class="intro-card" href="index.html"><h2>Zbiorniki paliwa</h2><p>Powrót do pełnej oferty paliwowej bez mieszania produktów AdBlue.</p></a>
+            <a class="intro-card" href="#adsn"><h2>Zbiorniki AdBlue</h2><p>Wszystkie serie AdBlue rozpisane w działach, bez ukrywania reszty katalogu.</p></a>
+        </div>
+
+    <main id="katalog">
+        <div class="section-heading site-shell">
+            <h2>Katalog produktów AdBlue</h2>
+            <p>Pełna oferta AdBlue w jasnych sekcjach. Wszystkie grupy są widoczne od razu, więc żadna seria nie dostaje sztucznego pierwszeństwa.</p>
+        </div>
+        <div class="category-scroller site-shell">
+            <a class="category-anchor" href="#adsn">ADSN z szafą</a>
+            <a class="category-anchor" href="#ad">Stacjonarne AD</a>
+            <a class="category-anchor" href="#mobile">Mobilne TT</a>
+            <a class="category-anchor" href="#combi">Mobilne TTC</a>
+            <a class="category-anchor" href="#special">Specjalne / podziemne</a>
+        </div>
+        <div id="product-sections"></div>
+    </main>
+
+    <section id="kontakt" class="contact-section">
+        <div class="glass-panel contact-card">
+            <h2>Kontakt z ekspertem</h2>
+            <p>Dobierzemy zbiornik AdBlue do floty, gospodarstwa lub bazy transportowej.</p>
+            <div class="contact-actions">
+                <a href="tel:+48509999979" class="phone-link">
+                    <span>Zadzwoń do nas</span>
+                    <strong>+48 509 999 979</strong>
+                </a>
+                <a href="mailto:bestdieseltank@o2.pl" class="mail-link">
+                    <span>Napisz wiadomość</span>
+                    <strong>bestdieseltank@o2.pl</strong>
+                </a>
+            </div>
+            <p style="margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:#9ca3af;">
+                Krzysztof Darczuk<br><span style="color:var(--brand-main)">Specjalista ds. Systemów Magazynowania Paliw i AdBlue</span>
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <button onclick="changeCategory('adsn', this)" class="category-btn active px-8 py-4 uppercase text-sm">ADSN z szafą</button>
-                <button onclick="changeCategory('ad', this)" class="category-btn px-8 py-4 uppercase text-sm">Stacjonarne AD</button>
-                <button onclick="changeCategory('mobile', this)" class="category-btn px-8 py-4 uppercase text-sm">Mobilne TT</button>
-                <button onclick="changeCategory('combi', this)" class="category-btn px-8 py-4 uppercase text-sm">Mobilne TTC</button>
-                <button onclick="changeCategory('special', this)" class="category-btn px-8 py-4 uppercase text-sm">Specjalne / podziemne</button>
-            </div>
-        </div>
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
-    </section>
-
-    <section id="kontakt" class="py-20 border-y border-gray-800">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <div class="glass-panel p-10 fs-border relative rounded-xl">
-                <h2 class="text-4xl font-black uppercase italic text-[#ff8c00] mb-4">Kontakt z Ekspertem</h2>
-                <p class="text-gray-300 text-base uppercase tracking-widest font-bold mb-10">Dobierzemy zbiornik AdBlue do floty, gospodarstwa lub bazy transportowej</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <a href="tel:+48509999979" class="btn-action flex flex-col items-center justify-center py-8 px-6 rounded-lg transition-all shadow-xl">
-                        <span class="text-black text-xs font-bold uppercase mb-2">Zadzwoń do nas</span>
-                        <span class="text-black text-3xl font-black tracking-tighter">+48 509 999 979</span>
-                    </a>
-
-                    <a href="mailto:bestdieseltank@o2.pl" class="bg-[#3d4147] hover:bg-[#1e9bff] flex flex-col items-center justify-center py-8 px-6 rounded-lg transition-all group shadow-xl">
-                        <span class="text-gray-300 group-hover:text-black text-xs font-bold uppercase mb-2">Napisz wiadomość</span>
-                        <span class="text-white group-hover:text-black text-2xl font-black tracking-tighter">bestdieseltank@o2.pl</span>
-                    </a>
-                </div>
-
-                <div class="mt-12 pt-8 border-t border-white/10">
-                    <p class="text-sm text-gray-400 uppercase tracking-widest leading-relaxed font-bold">
-                        Krzysztof Darczuk<br>
-                        <span class="text-[#1e9bff]">Specjalista ds. Systemów Magazynowania Paliw i AdBlue</span>
-                    </p>
-                </div>
-            </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-gray-500 text-xs uppercase tracking-[0.4em] font-bold">
-        Best Diesel Tank &copy; 2026 | Wszelkie prawa zastrzeżone
-    </footer>
+    <footer>Best Diesel Tank &copy; 2026 | Wszelkie prawa zastrzeżone</footer>
 
     <script>
         // --- BAZA PRODUKTÓW ADBLUE ---
@@ -411,6 +551,21 @@
         ];
 
         // --- ANIMACJA TŁA ---
+
+        const CATEGORY_ORDER = [
+            { key: 'adsn', label: 'ADSN z szafą' },
+            { key: 'ad', label: 'Stacjonarne AD' },
+            { key: 'mobile', label: 'Mobilne TT' },
+            { key: 'combi', label: 'Mobilne TTC' },
+            { key: 'special', label: 'Specjalne i podziemne' }
+        ];
+        const PRODUCT_BADGE = 'AdBlue';
+        const PLACEHOLDER_IMAGE = 'img/adblue/placeholder-adblue.png';
+        const OPTION_LABEL = 'Wyposażenie opcjonalne';
+        const SHOW_INSIDE_LINK = false;
+        const SHOW_CONFIG_MAIL = true;
+        const PARTICLE_MAIN = 'rgba(30, 155, 255, 0.2)';
+
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -419,14 +574,15 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for(let i = 0; i < 100; i++) {
+            const count = window.innerWidth < 700 ? 34 : 90;
+            for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     size: Math.random() * 2 + 1,
-                    speedX: (Math.random() - 0.5) * 0.8,
-                    speedY: (Math.random() - 0.5) * 0.8,
-                    color: i % 2 === 0 ? 'rgba(30, 155, 255, 0.2)' : 'rgba(255, 140, 0, 0.15)'
+                    speedX: (Math.random() - 0.5) * 0.55,
+                    speedY: (Math.random() - 0.5) * 0.55,
+                    color: i % 2 === 0 ? PARTICLE_MAIN : 'rgba(255, 140, 0, 0.15)'
                 });
             }
         }
@@ -436,16 +592,20 @@
             particles.forEach(p => {
                 p.x += p.speedX;
                 p.y += p.speedY;
-                if(p.x > canvas.width) p.x = 0;
-                if(p.x < 0) p.x = canvas.width;
-                if(p.y > canvas.height) p.y = 0;
-                if(p.y < 0) p.y = canvas.height;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.y > canvas.height) p.y = 0;
+                if (p.y < 0) p.y = canvas.height;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fillStyle = p.color;
                 ctx.fill();
             });
             requestAnimationFrame(animateParticles);
+        }
+
+        function safeText(value) {
+            return String(value || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
         }
 
         function toggleDetails(btn) {
@@ -455,103 +615,94 @@
             btn.querySelector('span').innerText = content.classList.contains('open') ? 'Ukryj szczegóły' : 'Pokaż szczegóły techniczne';
         }
 
-        function renderProducts(category) {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = '';
-            const filtered = db.filter(item => item.cat === category);
+        function productCard(p) {
+            const insideLink = SHOW_INSIDE_LINK && p.cat === 'stationary' ? `
+                <a href="inside.html" class="btn-inside">
+                    Zobacz konfiguracje wnętrza
+                </a>` : '';
+            const configLink = SHOW_CONFIG_MAIL ? `
+                <a href="#kontakt" onclick="setProductInMessage('${safeText(p.name)}')" class="btn-inside">
+                    Zapytaj o konfigurację
+                </a>` : '';
 
-            filtered.forEach((p) => {
-                grid.innerHTML += `
-                    <div class="glass-panel fs-border p-8 animate-fade-in flex flex-col h-full relative overflow-hidden rounded-2xl">
-                        <div class="absolute top-4 right-4 badge-adblue">AdBlue</div>
-
-                        <div class="h-64 flex items-center justify-center mb-8 bg-white/5 rounded-xl p-4">
-                            <img src="${p.images[0]}" alt="${p.name}" class="max-h-full max-w-full object-contain hover:scale-110 transition-transform duration-500" onerror="this.src='img/adblue/placeholder-adblue.png'; this.alt='Zdjęcie produktu w przygotowaniu';">
-                        </div>
-
-                        <h3 class="text-2xl font-black uppercase italic border-l-4 border-[#1e9bff] pl-4 mb-4 leading-tight text-[#1e9bff]">${p.name}</h3>
-
-                        <div class="flex flex-col gap-1 text-sm text-gray-300 uppercase font-bold mb-6 bg-black/40 p-3 rounded">
-                            <span class="flex justify-between gap-4"><span>Wymiary:</span> <span class="text-white font-black text-right">${p.dims}</span></span>
-                            <span class="flex justify-between gap-4"><span>Pojemność:</span> <span class="text-[#1e9bff] font-black text-right">${p.vol}</span></span>
-                        </div>
-
-                        <div class="mb-6">
-                             <div class="text-xs uppercase text-[#1e9bff] font-black mb-3 flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z"></path></svg>
-                                Główne atuty:
-                             </div>
-                             <ul class="text-sm text-gray-200 italic space-y-1">
-                                ${p.advantages.map(a => `<li class="flex items-center"><span class="w-2 h-2 bg-[#1e9bff] mr-2 rounded-full shrink-0"></span>${a}</li>`).join('')}
-                             </ul>
-                        </div>
-
-                        <button onclick="toggleDetails(this)" class="toggle-details-btn group flex items-center justify-between w-full mb-4 py-2 border-b border-white/10 text-xs font-black uppercase tracking-tighter hover:text-[#1e9bff] transition-colors">
-                            <span>Pokaż szczegóły techniczne</span>
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-
-                        <div class="details-content">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                                <div>
-                                    <span class="text-xs text-white/70 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie podstawowe</span>
-                                    <ul class="text-[11px] text-gray-400 space-y-1 font-semibold leading-tight">
-                                        ${p.base.map(f => `<li>• ${f}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <span class="text-xs text-[#ff8c00]/80 font-black uppercase tracking-widest border-b border-gray-600 block mb-3 pb-1">Wyposażenie opcjonalne</span>
-                                    <ul class="text-[11px] text-gray-500 space-y-1 font-semibold leading-tight">
-                                        ${p.extra.map(f => `<li>• ${f}</li>`).join('')}
-                                    </ul>
-                                </div>
+            return `
+                <article class="glass-panel product-card">
+                    <div class="product-badge">${PRODUCT_BADGE}</div>
+                    <div class="image-box">
+                        <img loading="lazy" src="${p.images[0]}" alt="${safeText(p.name)}" onerror="this.src='${PLACEHOLDER_IMAGE}'; this.alt='Zdjęcie produktu w przygotowaniu';">
+                    </div>
+                    <h4>${safeText(p.name)}</h4>
+                    <div class="facts">
+                        <span><em>Wymiary:</em><strong>${safeText(p.dims)}</strong></span>
+                        <span><em>Pojemność:</em><strong class="capacity">${safeText(p.vol)}</strong></span>
+                    </div>
+                    <div class="advantages-title">Główne atuty:</div>
+                    <ul class="advantages">${p.advantages.map(a => `<li>${safeText(a)}</li>`).join('')}</ul>
+                    <button onclick="toggleDetails(this)" class="toggle-details-btn" type="button">
+                        <span>Pokaż szczegóły techniczne</span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="details-content">
+                        <div class="details-grid">
+                            <div>
+                                <b>Wyposażenie podstawowe</b>
+                                <ul>${p.base.map(f => `<li>• ${safeText(f)}</li>`).join('')}</ul>
+                            </div>
+                            <div>
+                                <b>${OPTION_LABEL}</b>
+                                <ul>${p.extra.map(f => `<li>• ${safeText(f)}</li>`).join('')}</ul>
                             </div>
                         </div>
-
-                        <div class="flex flex-col gap-3 mt-auto">
-                            <a href="#kontakt" onclick="setProductInMessage('${p.name.replace(/'/g, "\\'")}')" class="btn-inside w-full py-3 text-[11px] uppercase cursor-pointer">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-                                </svg>
-                                Zapytaj o konfigurację
-                            </a>
-
-                            <button onclick="scrollToContact('${p.name.replace(/'/g, "\\'")}')"
-                                    class="w-full bg-[#3d4147] hover:bg-[#ff8c00] hover:text-black py-4 text-sm font-black uppercase transition-all tracking-widest rounded-lg shadow-lg">
-                                ZAPYTAJ O TEN MODEL
-                            </button>
-                        </div>
                     </div>
+                    <div class="card-actions">
+                        ${insideLink}
+                        ${configLink}
+                        <button onclick="scrollToContact('${safeText(p.name)}')" class="btn-ask" type="button">Zapytaj o ten model</button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('product-sections');
+            container.innerHTML = CATEGORY_ORDER.map(group => {
+                const products = db.filter(item => item.cat === group.key);
+                if (!products.length) return '';
+                return `
+                    <section class="product-section site-shell" id="${group.key}">
+                        <div class="group-title">
+                            <h3>${group.label}</h3>
+                            <span>${products.length} ${products.length === 1 ? 'model' : 'modeli'}</span>
+                        </div>
+                        <div class="product-grid">
+                            ${products.map(productCard).join('')}
+                        </div>
+                    </section>
                 `;
-            });
-        }
-
-        function changeCategory(cat, btn) {
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts(cat);
-        }
-
-        function setProductInMessage(productName) {
-            const subject = encodeURIComponent('Zapytanie o zbiornik AdBlue ' + productName);
-            const body = encodeURIComponent('Dzień dobry,\n\nProszę o ofertę i potwierdzenie konfiguracji dla modelu: ' + productName + '.\n\nPozdrawiam');
-            const mailLink = document.querySelector('a[href^="mailto:"]');
-            if (mailLink) {
-                mailLink.href = 'mailto:bestdieseltank@o2.pl?subject=' + subject + '&body=' + body;
-            }
+            }).join('');
         }
 
         function scrollToContact(productName = '') {
-            if (productName) setProductInMessage(productName);
+            if (SHOW_CONFIG_MAIL && productName) setProductInMessage(productName);
             document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function setProductInMessage(productName) {
+            const subjectPrefix = PRODUCT_BADGE === 'AdBlue' ? 'Zapytanie o zbiornik AdBlue ' : 'Zapytanie o zbiornik paliwa ';
+            const subject = encodeURIComponent(subjectPrefix + productName);
+            const body = encodeURIComponent('Dzień dobry,\n\nProszę o ofertę i potwierdzenie konfiguracji dla modelu: ' + productName + '.\n\nPozdrawiam');
+            document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+                link.href = 'mailto:bestdieseltank@o2.pl?subject=' + subject + '&body=' + body;
+            });
         }
 
         window.onload = () => {
             initParticles();
             animateParticles();
-            renderProducts('adsn');
+            renderProducts();
         };
         window.onresize = initParticles;
+
     </script>
 </body>
 </html>
